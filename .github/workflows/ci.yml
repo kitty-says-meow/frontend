@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('./yarn.lock') }}
+      - name: Install dependencies
+        run: yarn install --immutable
+
+  Build:
+    needs: Prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('./yarn.lock') }}
+      - run: yarn build
+      - uses: actions/cache@v2
+        with:
+          path: build
+          key: build-${{ github.run_id }}
+
+  ESLint:
+    needs: Prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('./yarn.lock') }}
+      - run: eslint --max-warnings=0 .
+
+  Prettier:
+    needs: Prepare
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('./yarn.lock') }}
+      - run: prettier --list-different .
