@@ -32,7 +32,7 @@ export const getTokens = async (code: string) => {
 
   updateTokens(data)
 
-  window.location.replace(redirectUri)
+  window.history.replaceState(null, ``, redirectUri)
 }
 
 export const redirectToAuthEndpoint = () => {
