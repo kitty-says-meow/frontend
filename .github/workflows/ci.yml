@@ -25,17 +25,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - id: restore_build_cache
+      - id: restore-build-cache
         uses: actions/cache@v2
         with:
           path: build
-          key: build-${{ hashFiles('./build/**') }}
-      - if: steps.restore_build_cache.outputs.cache-hit != 'true'
+          key: build-${{ github.sha }}
+      - if: steps.restore-build-cache.outputs.cache-hit != 'true'
         uses: actions/cache@v2
         with:
           path: node_modules
           key: node_modules-${{ hashFiles('./yarn.lock') }}
-      - if: steps.restore_build_cache.outputs.cache-hit != 'true'
+      - if: steps.restore-build-cache.outputs.cache-hit != 'true'
         env:
           REACT_APP_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_AUTH_CLIENT_ID }}
           REACT_APP_AUTH_CLIENT_SECRET: ${{ secrets.REACT_APP_AUTH_CLIENT_SECRET }}
@@ -75,7 +75,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: build
-          key: build-${{ hashFiles('./build/**') }}
+          key: build-${{ github.sha }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
