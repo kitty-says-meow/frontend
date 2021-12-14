@@ -36,6 +36,12 @@ jobs:
           path: node_modules
           key: node_modules-${{ hashFiles('./yarn.lock') }}
       - if: steps.restore_build_cache.outputs.cache-hit != 'true'
+        env:
+          REACT_APP_AUTH_CLIENT_ID: ${{ secrets.REACT_APP_AUTH_CLIENT_ID }}
+          REACT_APP_AUTH_CLIENT_SECRET: ${{ secrets.REACT_APP_AUTH_CLIENT_SECRET }}
+          REACT_APP_AUTH_ENDPOINT: ${{ secrets.REACT_APP_AUTH_ENDPOINT }}
+          REACT_APP_AUTH_TOKEN_ENDPOINT: ${{ secrets.REACT_APP_AUTH_TOKEN_ENDPOINT }}
+          REACT_APP_API_DOMAIN: ${{ secrets.REACT_APP_API_DOMAIN }}
         run: yarn build
 
   ESLint:
