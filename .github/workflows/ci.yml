@@ -33,7 +33,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: build
-          key: build-${{ github.run_id }}
+          key: build-${{ hashFiles('./build/**') }}
 
   ESLint:
     needs: Prepare
@@ -59,7 +59,7 @@ jobs:
 
   Deploy:
     if: github.event_name == 'push'
-    needs: [Build, ESLint, Stylelint]
+    needs: [Build, ESLint, Prettier]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
