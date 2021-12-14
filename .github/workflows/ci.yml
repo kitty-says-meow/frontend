@@ -69,7 +69,7 @@ jobs:
       - uses: actions/cache@v2
         with:
           path: build
-          key: build-${{ github.run_id }}
+          key: build-${{ hashFiles('./build/**') }}
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
