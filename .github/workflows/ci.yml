@@ -25,15 +25,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('./yarn.lock') }}
       - id: restore_build_cache
         uses: actions/cache@v2
         with:
           path: build
           key: build-${{ hashFiles('./build/**') }}
+      - if: steps.restore_build_cache.outputs.cache-hit != 'true'
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: node_modules-${{ hashFiles('./yarn.lock') }}
       - if: steps.restore_build_cache.outputs.cache-hit != 'true'
         run: yarn build
 
