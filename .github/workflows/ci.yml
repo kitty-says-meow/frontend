@@ -56,3 +56,20 @@ jobs:
           path: node_modules
           key: node_modules-${{ hashFiles('./yarn.lock') }}
       - run: yarn check:prettier
+
+  Deploy:
+    if: github.event_name == 'push'
+    needs: [Build, ESLint, Stylelint]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: build
+          key: build-${{ github.run_id }}
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_KITTY_SAYS_MEOW }}'
+          channelId: live
+          projectId: kitty-says-meow
