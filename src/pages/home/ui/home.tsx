@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <div className={styles.wrapper}>
       <Logo className={styles.logo} />
-      <p>Welcome, {user?.name}</p>
+      <p>Привет, {user?.name}</p>
     </div>
   )
 }
