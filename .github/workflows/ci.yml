@@ -44,7 +44,7 @@ jobs:
         with:
           path: node_modules
           key: node_modules-${{ hashFiles('./yarn.lock') }}
-      - run: eslint --max-warnings=0 .
+      - run: yarn check:eslint
 
   Prettier:
     needs: Prepare
@@ -55,4 +55,4 @@ jobs:
         with:
           path: node_modules
           key: node_modules-${{ hashFiles('./yarn.lock') }}
-      - run: prettier --list-different .
+      - run: yarn check:prettier

@@ -28,7 +28,9 @@
     "start": "craco start",
     "build": "craco build",
     "eject": "craco eject",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "check:eslint": "eslint --max-warnings=0 .",
+    "check:prettier": "prettier --list-different ."
   },
   "browserslist": {
     "production": [
