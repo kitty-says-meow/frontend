@@ -1,7 +1,9 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 
+import { UserContext } from 'entities/user/ui'
+import { getUser, User } from 'shared/api'
+
 import { checkAuth } from '../lib'
-import { AuthContext } from './auth-context'
 
 interface Props {
   children: ReactNode
@@ -9,22 +11,19 @@ interface Props {
 
 export const AuthProvider = ({ children }: Props) => {
   const [isLoading, setIsLoading] = useState(true)
-  const [isAuthorized, setIsAuthorized] = useState(false)
+  const [user, setUser] = useState<User>()
 
   useEffect(() => {
-    checkAuth().then(() => setIsLoading(false))
+    checkAuth()
+      .then(() => setIsLoading(false))
+      .then(() => setUser(getUser()))
   }, [])
 
-  const contextValue = useMemo(
-    () => ({ isAuthorized, setIsAuthorized }),
-    [isAuthorized],
-  )
+  const value = useMemo(() => ({ user }), [user])
 
   if (isLoading) {
     return null
   }
 
-  return (
-    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
-  )
+  return <UserContext.Provider value={value}>{children}</UserContext.Provider>
 }
