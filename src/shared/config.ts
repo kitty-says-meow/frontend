@@ -1,6 +1,9 @@
 export enum PATH {
   HOME = `/`,
-  INFO = `/info`,
+  EVENTS = `/events`,
+  PROFILE = `/:userId`,
+  RATING = `/rating`,
+  CLUBS = `/clubs`,
 }
 
 export const routingTransitionDuration = 0.3

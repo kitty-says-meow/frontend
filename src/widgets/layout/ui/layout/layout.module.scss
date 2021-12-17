@@ -1,0 +1,18 @@
+.wrapper {
+  display: grid;
+  grid-template-areas: 'm h' 'm c';
+  grid-template-columns: 256px 1fr;
+}
+
+.menu {
+  filter: drop-shadow(0px 2px 12px rgba(175, 187, 212, 0.22));
+}
+
+.content {
+  padding: 48px;
+  height: 100vh;
+}
+
+.logo {
+  margin: 24px;
+}
