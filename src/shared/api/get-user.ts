@@ -6,6 +6,7 @@ export interface User {
   givenName: string
   id: string
   middleName: string
+  avatarUrl: string
   name: string
 }
 
@@ -19,7 +20,8 @@ export const parseJWT = (
   | `given_name`
   | `id`
   | `middle_name`
-  | `name`,
+  | `name`
+  | `avatar_url`,
   string
 > => {
   const base64Url = token.split(`.`)[1]
@@ -42,6 +44,7 @@ export const getUser = (): User => {
   }
 
   const {
+    avatar_url,
     corp_email,
     email,
     family_name,
@@ -57,6 +60,7 @@ export const getUser = (): User => {
     email,
     gender,
     name,
+    avatarUrl: avatar_url,
     corpEmail: corp_email,
     familyName: family_name,
     givenName: given_name,

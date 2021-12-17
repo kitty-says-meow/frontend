@@ -12,6 +12,14 @@ interface Props {
   children: ReactNode
 }
 
+const Logo = () => (
+  <img
+    alt=''
+    className={styles.logo}
+    src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg'
+  />
+)
+
 export const Layout = ({ children }: Props) => {
   const history = useHistory()
   const location = useLocation()
@@ -43,11 +51,7 @@ export const Layout = ({ children }: Props) => {
   return (
     <div className={styles.wrapper}>
       <Menu className={styles.menu} mode='inline' selectedKeys={[key]}>
-        <img
-          alt=''
-          className={styles.logo}
-          src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg'
-        />
+        <Logo />
         {pages.map(({ title, link, icon }) => (
           <Menu.Item
             key={link}
