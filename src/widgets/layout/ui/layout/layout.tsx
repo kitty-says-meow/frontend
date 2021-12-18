@@ -1,4 +1,9 @@
-import { UserOutlined } from '@ant-design/icons'
+import {
+  EnvironmentOutlined,
+  SmileOutlined,
+  StarOutlined,
+  UserOutlined,
+} from '@ant-design/icons'
 import { Menu } from 'antd'
 import { motion } from 'framer-motion'
 import { ReactNode, useCallback, useMemo } from 'react'
@@ -33,10 +38,14 @@ export const Layout = ({ children }: Props) => {
 
   const pages = useMemo<{ link: string; title: string; icon: ReactNode }[]>(
     () => [
-      { title: `Моя страница`, link: id, icon: <UserOutlined /> },
+      { title: `Моя страница`, link: id, icon: <EnvironmentOutlined /> },
       { title: `Мероприятия`, link: PATH.EVENTS, icon: <UserOutlined /> },
-      { title: `Рейтинг`, link: PATH.RATING, icon: <UserOutlined /> },
-      { title: `Мои клубы`, link: PATH.CLUBS, icon: <UserOutlined /> },
+      { title: `Рейтинг`, link: PATH.RATING, icon: <StarOutlined /> },
+      {
+        title: `Мои клубы`,
+        link: PATH.CLUBS,
+        icon: <SmileOutlined />,
+      },
     ],
     [id],
   )
