@@ -34,7 +34,7 @@ export const Profile = () => {
           </Card>
         </div>
         <div className={styles.column}>
-          <ScoreCard info='Info' label='ПГАС баллы' value={user?.pgasScore}>
+          <ScoreCard info='Info' label='Баллы ПГАС' value={user?.pgasScore}>
             <Button onClick={() => setIsConvertModalVisible(true)}>
               Конвертировать
             </Button>

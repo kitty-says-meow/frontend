@@ -1,4 +1,4 @@
-import { InfoCircleOutlined } from '@ant-design/icons'
+import { InfoCircleFilled } from '@ant-design/icons'
 import { Card, Typography, Tooltip } from 'antd'
 import { ReactNode } from 'react'
 
@@ -13,12 +13,12 @@ interface Props {
 
 export const ScoreCard = ({ label, info, value, children }: Props) => {
   return (
-    <Card>
+    <Card className={styles.card}>
       <Tooltip title={info}>
-        <InfoCircleOutlined />
+        <InfoCircleFilled className={styles.info} />
       </Tooltip>
       <Typography.Text className={styles.title}>{label}</Typography.Text>
-      <p>{value}</p>
+      <p className={styles.value}>{value}</p>
       <div className={styles.footer}>{children}</div>
     </Card>
   )
