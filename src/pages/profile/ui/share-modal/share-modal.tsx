@@ -1,5 +1,7 @@
-import { Button, Form, InputNumber, Modal, Select } from 'antd'
-import { Dispatch } from 'react'
+import { Button, Form, InputNumber, Modal, Select, Spin } from 'antd'
+import { Dispatch, useState } from 'react'
+import { useDebounce } from 'shared/lib'
+import { useUsersSearch } from 'entities/user/lib'
 
 interface Props {
   isVisible: boolean
@@ -7,6 +9,12 @@ interface Props {
 }
 
 export const ShareModal = ({ isVisible, setVisible }: Props) => {
+  const [search, setSearch] = useState<string>()
+  const debouncedSearch = useDebounce(search, 300)
+  const { data: users, isValidating } = useUsersSearch(debouncedSearch)
+
+  console.log(users)
+
   return (
     <Modal
       title='Подарить баллы другу'
@@ -24,7 +32,17 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
           <InputNumber placeholder='122' />
         </Form.Item>
         <Form.Item label='Пользователь'>
-          <Select placeholder='Глеб Новиков' />
+          <Select
+            showSearch
+            options={users?.map((user) => ({
+              label: `${user.firstName} ${user.lastName}, ${user.username}`,
+              value: user.username,
+            }))}
+            onSearch={setSearch}
+            notFoundContent={isValidating && <Spin style={{ width: `100%` }} />}
+            filterOption={() => true}
+            placeholder='Поиск по имени, фамилии и id в ИСУ'
+          />
         </Form.Item>
       </Form>
     </Modal>

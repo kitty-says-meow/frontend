@@ -26,7 +26,8 @@
     "eject": "craco eject",
     "prepare": "husky install",
     "check:eslint": "eslint --max-warnings=0 .",
-    "check:prettier": "prettier --list-different ."
+    "check:prettier": "prettier --list-different .",
+    "tools:dtsgen": "./generate-types.sh"
   },
   "browserslist": {
     "production": [
@@ -41,6 +42,7 @@
     ]
   },
   "devDependencies": {
+    "dtsgenerator": "^3.13.2",
     "husky": "^6.0.0",
     "prettier": "^2.5.1",
     "pretty-quick": "^3.1.2"
