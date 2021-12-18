@@ -44,27 +44,27 @@ jobs:
           REACT_APP_API_DOMAIN: ${{ secrets.REACT_APP_API_DOMAIN }}
         run: yarn build
 
-  ESLint:
-    needs: Prepare
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('./yarn.lock') }}
-      - run: yarn check:eslint
+  #  ESLint:
+  #    needs: Prepare
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - uses: actions/cache@v2
+  #        with:
+  #          path: node_modules
+  #          key: node_modules-${{ hashFiles('./yarn.lock') }}
+  #      - run: yarn check:eslint
 
-  Prettier:
-    needs: Prepare
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/cache@v2
-        with:
-          path: node_modules
-          key: node_modules-${{ hashFiles('./yarn.lock') }}
-      - run: yarn check:prettier
+  #  Prettier:
+  #    needs: Prepare
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #      - uses: actions/cache@v2
+  #        with:
+  #          path: node_modules
+  #          key: node_modules-${{ hashFiles('./yarn.lock') }}
+  #      - run: yarn check:prettier
 
   Deploy:
     if: github.event_name == 'push'

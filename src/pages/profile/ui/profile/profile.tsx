@@ -1,6 +1,7 @@
 import { Button, Card, Typography } from 'antd'
 
 import { useUser } from 'entities/user/lib'
+import { PageTitle } from 'shared/ui'
 
 import { Achievements, ScoreCard } from '..'
 import mock from '../../assets/mock.svg'
@@ -11,9 +12,7 @@ export const Profile = () => {
 
   return (
     <>
-      <Typography.Title className={styles.title} level={5}>
-        Мой профиль
-      </Typography.Title>
+      <PageTitle title='Мой профиль' />
       <div className={styles.wrapper}>
         <div>
           <Card>
