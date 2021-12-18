@@ -1,0 +1,50 @@
+.programContainer {
+  position: relative;
+
+  width: 100%;
+  height: 180px;
+
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+  cursor: pointer;
+  filter: drop-shadow(0px 0px 28px rgba(0, 0, 0, 0.14));
+}
+
+.coloredBlock {
+  position: relative;
+  background: #94b6f5;
+
+  width: 100%;
+  padding: 14px 20px;
+}
+
+.infoBlock {
+  position: absolute;
+  top: 56px;
+  width: 100%;
+  left: 0;
+  height: 112px;
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.name {
+  margin-bottom: 4px;
+
+  font-weight: 500;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 135%;
+}
+
+.scores {
+  margin-bottom: 4px;
+
+  font-weight: normal;
+  font-size: 14px;
+  font-style: normal;
+  line-height: 125%;
+}
