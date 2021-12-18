@@ -1,5 +1,5 @@
 import { PageTitle } from 'shared/ui'
-import { EventCard } from '..'
+import { EventCard } from 'widgets/events/ui'
 import styles from './events.module.scss'
 import { Tabs } from 'antd'
 
