@@ -1,13 +1,18 @@
 import { useUser } from 'entities/user/lib'
 
-import styles from './home.module.scss'
+import { useEffect } from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
+import { PATH } from 'shared/config'
 
 export const Home = () => {
   const { user } = useUser()
+  const history = useHistory()
 
-  return (
-    <div className={styles.wrapper}>
-      <p>Привет, {user?.name}</p>
-    </div>
-  )
+  useEffect(() => {
+    if (user?.id) {
+      history.push(generatePath(PATH.PROFILE, { userId: user.id }))
+    }
+  }, [history, user?.id])
+
+  return null
 }
