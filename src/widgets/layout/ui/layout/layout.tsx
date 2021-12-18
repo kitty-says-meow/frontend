@@ -14,7 +14,7 @@ import { routingTransitionDuration, PATH } from 'shared/config'
 import { ReactComponent as LogoSVG } from './logo.svg'
 
 import styles from './layout.module.scss'
-import { useUserProfile } from 'entities/user/lib'
+import { useUserProfile } from 'entities/users/lib'
 
 interface Props {
   children: ReactNode

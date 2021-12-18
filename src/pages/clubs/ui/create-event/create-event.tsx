@@ -16,7 +16,7 @@ import { Moment } from 'moment'
 import styles from './create-event.module.scss'
 import { createEvent } from 'entities/events/lib'
 import { generatePath, useHistory } from 'react-router-dom'
-import { useUserProfile } from 'entities/user/lib'
+import { useUserProfile } from 'entities/users/lib'
 
 interface Props {
   visible: boolean

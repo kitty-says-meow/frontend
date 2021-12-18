@@ -1,6 +1,6 @@
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 
-import { UserContext } from 'entities/user/ui'
+import { UserContext } from 'entities/users/ui'
 import { getUser, User } from 'shared/api'
 
 import { checkAuth } from '../lib'

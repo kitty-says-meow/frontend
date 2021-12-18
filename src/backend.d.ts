@@ -122,6 +122,25 @@ declare namespace Components {
       email: string // email
       departments: Department[]
     }
+    export interface Rating {
+      /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      username: string
+      /**
+       * Имя
+       */
+      firstName: string
+      /**
+       * Фамилия
+       */
+      lastName: string
+      /**
+       * Баллы ПГАС
+       */
+      pgasScore: number
+    }
     export interface ScoreOperation {
       score: number
     }
@@ -188,6 +207,11 @@ declare namespace Paths {
   namespace UsersProfileRetrieve {
     namespace Responses {
       export type $200 = Components.Schemas.Profile
+    }
+  }
+  namespace UsersRatingRetrieve {
+    namespace Responses {
+      export type $200 = Components.Schemas.Rating
     }
   }
   namespace UsersRetrieve {

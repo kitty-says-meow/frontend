@@ -2,7 +2,7 @@ import { Button, Card, Typography } from 'antd'
 import { useState } from 'react'
 import { generatePath, Link, useParams } from 'react-router-dom'
 
-import { useUser, useUserContext } from 'entities/user/lib'
+import { useUser, useUserContext } from 'entities/users/lib'
 import { PageTitle } from 'shared/ui'
 
 import { Achievements, ConvertModal, ScoreCard, ShareModal, Trophies } from '..'
