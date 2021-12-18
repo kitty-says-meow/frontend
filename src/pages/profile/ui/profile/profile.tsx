@@ -2,7 +2,7 @@ import { Button, Card, Typography } from 'antd'
 import { useState } from 'react'
 import { generatePath, Link } from 'react-router-dom'
 
-import { useUser } from 'entities/user/lib'
+import { useUser, useUserContext } from 'entities/user/lib'
 import { PageTitle } from 'shared/ui'
 
 import { Achievements, ScoreCard, ShareModal } from '..'
@@ -11,7 +11,8 @@ import styles from './profile.module.scss'
 import { PATH } from 'shared/config'
 
 export const Profile = () => {
-  const { user } = useUser()
+  const { user: userContext } = useUserContext()
+  const { data: user } = useUser(userContext?.id)
   const [isShareModalVisible, setIsShareModalVisible] = useState(false)
 
   return (
@@ -23,26 +24,26 @@ export const Profile = () => {
             <img
               alt=''
               className={styles.image}
-              src={user?.avatarUrl || mock}
+              src={userContext?.avatarUrl || mock}
             />
             <Typography.Title className={styles.name} level={5}>
-              {user?.name}
+              {userContext?.name}
             </Typography.Title>
-            <Typography.Text>{user?.id}</Typography.Text>
+            <Typography.Text>{userContext?.id}</Typography.Text>
           </Card>
         </div>
         <div className={styles.column}>
-          <ScoreCard info='Info' label='ПГАС баллы' value={125}>
+          <ScoreCard info='Info' label='ПГАС баллы' value={user?.pgasScore}>
             <Button>Конвертировать</Button>
           </ScoreCard>
-          <ScoreCard info='Info' label='ПГАС баллы' value={125}>
+          <ScoreCard info='Info' label='Доп баллы' value={user?.personalScore}>
             <Button onClick={() => setIsShareModalVisible(true)}>
               Подарить
             </Button>
-            {user && (
+            {userContext && (
               <Link
                 to={generatePath(PATH.PROFILE_SHOP, {
-                  userId: user.id,
+                  userId: userContext.id,
                 })}
               >
                 <Button>Потратить</Button>

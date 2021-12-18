@@ -7,7 +7,7 @@ import styles from './score-card.module.scss'
 interface Props {
   label: string
   info: string
-  value: number
+  value?: number
   children: ReactNode
 }
 
