@@ -20,9 +20,6 @@
     "swr": "^1.1.1",
     "typescript": "^4.1.2"
   },
-  "lint-staged": {
-    "{.github,public,src}/**/*": "prettier --write"
-  },
   "scripts": {
     "start": "craco start",
     "build": "craco build",
@@ -44,10 +41,8 @@
     ]
   },
   "devDependencies": {
-    "eslint-import-resolver-typescript": "^2.5.0",
-    "eslint-plugin-import": "^2.25.3",
     "husky": "^6.0.0",
-    "lint-staged": "^12.1.2",
-    "prettier": "^2.5.1"
+    "prettier": "^2.5.1",
+    "pretty-quick": "^3.1.2"
   }
 }
