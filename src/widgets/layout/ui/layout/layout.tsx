@@ -53,18 +53,25 @@ export const Layout = ({ children }: Props) => {
     return pages
   }, [id, profile?.departments.length])
 
-  const key = useMemo(
-    () =>
-      (
-        pages.find((page) => location.pathname.includes(getKey(page.link))) ||
-        pages[0]
-      ).link,
-    [getKey, location.pathname, pages],
-  )
+  const keys = useMemo(() => {
+    const page = pages.find((page) =>
+      location.pathname.includes(getKey(page.link)),
+    )
+
+    if (page) {
+      return [page.link]
+    }
+
+    if (/^\/\d$/.test(location.pathname)) {
+      return [pages[0].link]
+    }
+
+    return []
+  }, [getKey, location.pathname, pages])
 
   return (
     <div className={styles.wrapper}>
-      <Menu className={styles.menu} mode='inline' selectedKeys={[key]}>
+      <Menu className={styles.menu} mode='inline' selectedKeys={keys}>
         <Logo />
         {pages.map(({ title, link, icon }) => (
           <Menu.Item
