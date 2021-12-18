@@ -24,3 +24,6 @@ export const sendUserScore = (username: string, score: number) =>
 
 export const convertUserScore = (score: number) =>
   api.post(`/users/score/convert`, { score })
+
+export const useRating = () =>
+  useSWR<Components.Schemas.Rating[]>(`/users/rating`)

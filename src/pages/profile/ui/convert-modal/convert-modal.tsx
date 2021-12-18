@@ -1,6 +1,6 @@
 import { Button, Form, InputNumber, Modal, notification } from 'antd'
 import { Dispatch, useCallback } from 'react'
-import { convertUserScore, useUserContext } from 'entities/user/lib'
+import { convertUserScore, useUserContext } from 'entities/users/lib'
 import { mutate } from 'swr'
 
 interface Props {

@@ -1,4 +1,4 @@
-import { useUserContext } from 'entities/user/lib'
+import { useUserContext } from 'entities/users/lib'
 
 import { useEffect } from 'react'
 import { generatePath, useHistory } from 'react-router-dom'

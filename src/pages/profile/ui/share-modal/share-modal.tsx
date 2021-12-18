@@ -13,7 +13,7 @@ import {
   sendUserScore,
   useUserContext,
   useUsersSearch,
-} from 'entities/user/lib'
+} from 'entities/users/lib'
 import { mutate } from 'swr'
 
 interface Props {

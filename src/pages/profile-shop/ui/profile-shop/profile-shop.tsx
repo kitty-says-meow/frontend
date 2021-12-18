@@ -5,7 +5,7 @@ import { Button, Card, notification, Statistic, Typography } from 'antd'
 import styles from './profile-shop.module.scss'
 import { itemsContent } from '../../ItemsContent'
 import { useMemo, useState } from 'react'
-import { useUserProfile } from 'entities/user/lib'
+import { useUserProfile } from 'entities/users/lib'
 
 export const ProfileShop = () => {
   const [items, setItems] = useState<number[]>(itemsContent.map(() => 0))
