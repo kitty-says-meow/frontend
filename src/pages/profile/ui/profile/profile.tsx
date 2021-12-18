@@ -5,7 +5,7 @@ import { generatePath, Link } from 'react-router-dom'
 import { useUser, useUserContext } from 'entities/user/lib'
 import { PageTitle } from 'shared/ui'
 
-import { Achievements, ConvertModal, ScoreCard, ShareModal } from '..'
+import { Achievements, ConvertModal, ScoreCard, ShareModal, Trophies } from '..'
 import mock from '../../assets/mock.svg'
 import styles from './profile.module.scss'
 import { PATH } from 'shared/config'
@@ -32,9 +32,10 @@ export const Profile = () => {
             </Typography.Title>
             <Typography.Text>{userContext?.id}</Typography.Text>
           </Card>
+          <Trophies />
         </div>
         <div className={styles.column}>
-          <ScoreCard info='Info' label='ПГАС баллы' value={user?.pgasScore}>
+          <ScoreCard info='Info' label='Баллы ПГАС' value={user?.pgasScore}>
             <Button onClick={() => setIsConvertModalVisible(true)}>
               Конвертировать
             </Button>

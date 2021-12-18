@@ -1,3 +1,7 @@
+.card {
+  position: relative;
+}
+
 .title {
   font-weight: 500;
   font-size: 16px;
@@ -10,4 +14,19 @@
   grid-gap: 8px;
   justify-content: end;
   grid-auto-flow: column;
+}
+
+.value {
+  font-weight: bold;
+  font-size: 38px;
+  margin: 8px 0 16px;
+  text-align: left;
+}
+
+.info {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-size: 18px;
+  color: #c2cce1;
 }
