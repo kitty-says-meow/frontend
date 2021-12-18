@@ -1,4 +1,4 @@
-import 'antd/dist/antd.css'
+import 'antd/dist/antd.less'
 import './styles/index.scss'
 
 import { Layout } from 'widgets/layout/ui'
