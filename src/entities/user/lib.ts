@@ -21,3 +21,6 @@ export const useUserProfile = () =>
 
 export const sendUserScore = (username: string, score: number) =>
   api.post(`/users/${username}/score/send`, { score })
+
+export const convertUserScore = (score: number) =>
+  api.post(`/users/score/convert`, { score })

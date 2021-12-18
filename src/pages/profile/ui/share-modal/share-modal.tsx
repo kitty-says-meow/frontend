@@ -9,7 +9,12 @@ import {
 } from 'antd'
 import { Dispatch, useCallback, useState } from 'react'
 import { useDebounce } from 'shared/lib'
-import { sendUserScore, useUsersSearch } from 'entities/user/lib'
+import {
+  sendUserScore,
+  useUserContext,
+  useUsersSearch,
+} from 'entities/user/lib'
+import { mutate } from 'swr'
 
 interface Props {
   isVisible: boolean
@@ -20,6 +25,7 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
   const [search, setSearch] = useState<string>()
   const debouncedSearch = useDebounce(search, 300)
   const { data: users, isValidating } = useUsersSearch(debouncedSearch)
+  const { user } = useUserContext()
 
   const [form] = Form.useForm()
 
@@ -29,11 +35,15 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
       score,
     }: Paths.UsersScoreSendCreate.RequestBody &
       Paths.UsersScoreSendCreate.PathParameters) => {
+      if (!user) {
+        return
+      }
       await sendUserScore(username, score)
       notification.success({ message: `Баллы успешно отправлены` })
+      await mutate(`/users/${user.id}`)
       setVisible(false)
     },
-    [setVisible],
+    [setVisible, user],
   )
 
   return (

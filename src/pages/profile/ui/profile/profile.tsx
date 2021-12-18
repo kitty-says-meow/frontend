@@ -5,7 +5,7 @@ import { generatePath, Link } from 'react-router-dom'
 import { useUser, useUserContext } from 'entities/user/lib'
 import { PageTitle } from 'shared/ui'
 
-import { Achievements, ScoreCard, ShareModal } from '..'
+import { Achievements, ConvertModal, ScoreCard, ShareModal } from '..'
 import mock from '../../assets/mock.svg'
 import styles from './profile.module.scss'
 import { PATH } from 'shared/config'
@@ -14,6 +14,7 @@ export const Profile = () => {
   const { user: userContext } = useUserContext()
   const { data: user } = useUser(userContext?.id)
   const [isShareModalVisible, setIsShareModalVisible] = useState(false)
+  const [isConvertModalVisible, setIsConvertModalVisible] = useState(false)
 
   return (
     <>
@@ -34,7 +35,9 @@ export const Profile = () => {
         </div>
         <div className={styles.column}>
           <ScoreCard info='Info' label='ПГАС баллы' value={user?.pgasScore}>
-            <Button>Конвертировать</Button>
+            <Button onClick={() => setIsConvertModalVisible(true)}>
+              Конвертировать
+            </Button>
           </ScoreCard>
           <ScoreCard info='Info' label='Доп баллы' value={user?.personalScore}>
             <Button onClick={() => setIsShareModalVisible(true)}>
@@ -56,6 +59,10 @@ export const Profile = () => {
       <ShareModal
         isVisible={isShareModalVisible}
         setVisible={setIsShareModalVisible}
+      />
+      <ConvertModal
+        isVisible={isConvertModalVisible}
+        setVisible={setIsConvertModalVisible}
       />
     </>
   )
