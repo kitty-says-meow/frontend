@@ -1,5 +1,23 @@
 .wrapper {
   display: grid;
   grid-gap: 24px;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+}
+
+.tabs {
+  margin: -48px -48px 48px;
+  background: white;
+
+  :global(.ant-tabs-nav) {
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  :global(.ant-tabs-nav-operations) {
+    display: none !important;
+  }
+
+  :global(.ant-tabs-tab) {
+    padding: 18px 0;
+  }
 }
