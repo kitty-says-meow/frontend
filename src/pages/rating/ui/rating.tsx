@@ -1,5 +1,6 @@
-import { Table } from 'antd'
+import { Alert, Table } from 'antd'
 import { PageTitle } from 'shared/ui'
+import styles from './rating.module.scss'
 
 const columns = [
   {
@@ -55,6 +56,12 @@ export const Rating = () => {
   return (
     <>
       <PageTitle title='Рейтинг' />
+      <Alert
+        className={styles.alert}
+        message='Поздравляю! Ты будешь получать ПГАС!'
+        type='success'
+        showIcon
+      />
       <Table columns={columns} dataSource={data} pagination={false} />
     </>
   )

@@ -65,7 +65,7 @@ export const Layout = ({ children }: Props) => {
           </Menu.Item>
         ))}
       </Menu>
-      <motion.header
+      <motion.div
         animate={{ opacity: 1 }}
         className={styles.content}
         exit={{ opacity: 0 }}
@@ -73,7 +73,7 @@ export const Layout = ({ children }: Props) => {
         transition={{ duration: routingTransitionDuration }}
       >
         {children}
-      </motion.header>
+      </motion.div>
     </div>
   )
 }

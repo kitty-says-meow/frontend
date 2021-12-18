@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   display: grid;
   grid-template-areas: 'm h' 'm c';
   grid-template-columns: 256px 1fr;
