@@ -11,4 +11,27 @@
   background: white;
   border-radius: 5px;
   border: 1px solid #f0f0f0;
+  padding: 16px;
+
+  :global(.ant-list-item-action) {
+    position: absolute;
+    top: 16px;
+    right: 8px;
+    font-weight: 500;
+  }
+}
+
+.title.title {
+  display: flex;
+  margin: 16px 16px 6px;
+}
+
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 0;
+}
+
+.totalScore {
+  margin-left: auto;
 }
