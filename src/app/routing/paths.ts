@@ -5,5 +5,6 @@ import { Paths } from './routing'
 
 export const paths: Paths = [
   { path: PATH.HOME, component: pages.Home, default: true },
+  { path: PATH.EVENTS, component: pages.Events },
   { path: PATH.PROFILE, component: pages.Profile },
 ]
