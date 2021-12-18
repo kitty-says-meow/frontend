@@ -11,6 +11,7 @@ import { useHistory, useLocation } from 'react-router-dom'
 
 import { getUser } from 'shared/api'
 import { routingTransitionDuration, PATH } from 'shared/config'
+import { ReactComponent as LogoSVG } from './logo.svg'
 
 import styles from './layout.module.scss'
 
@@ -18,13 +19,7 @@ interface Props {
   children: ReactNode
 }
 
-const Logo = () => (
-  <img
-    alt=''
-    className={styles.logo}
-    src='https://upload.wikimedia.org/wikipedia/commons/c/ce/Coca-Cola_logo.svg'
-  />
-)
+const Logo = () => <LogoSVG className={styles.logo} />
 
 export const Layout = ({ children }: Props) => {
   const history = useHistory()
