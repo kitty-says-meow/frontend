@@ -1,5 +1,5 @@
 import { PageTitle } from 'shared/ui'
-import { Card, Divider, Typography } from 'antd'
+import { Avatar, Button, Card, Divider, List, Typography } from 'antd'
 
 import styles from './event.module.scss'
 
@@ -28,6 +28,9 @@ export const Event = () => {
             </Typography.Title>
             <Typography.Text>Перове место в хакатоне</Typography.Text>
           </Card>
+          <Button block className={styles.button} size='large' type='primary'>
+            Записаться
+          </Button>
         </div>
         <div className={styles.right}>
           <Typography.Title level={3}>Хакатон от ICT#3</Typography.Title>
@@ -56,6 +59,40 @@ export const Event = () => {
             </div>
           </div>
           <Divider className={styles.hr} />
+          <Typography.Title className={styles.dateTitle} level={5}>
+            Участники
+          </Typography.Title>
+          <List
+            className={styles.list}
+            dataSource={[
+              {
+                title: `Title`,
+                score: 123,
+                image: `https://joeschmoe.io/api/v1/random`,
+              },
+              {
+                title: `Title`,
+                score: 123,
+                image: `https://joeschmoe.io/api/v1/random`,
+              },
+            ]}
+            itemLayout='horizontal'
+            renderItem={(item) => (
+              <List.Item className={styles.item}>
+                <List.Item.Meta
+                  avatar={
+                    <Avatar
+                      className={styles.avatar}
+                      src='https://joeschmoe.io/api/v1/random'
+                    />
+                  }
+                  title={
+                    <Typography.Title level={5}>{item.title}</Typography.Title>
+                  }
+                />
+              </List.Item>
+            )}
+          />
         </div>
       </div>
     </>

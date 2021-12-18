@@ -2,11 +2,17 @@ import { Card, Typography } from 'antd'
 import { generatePath, Link } from 'react-router-dom'
 import styles from './event-card.module.scss'
 import { PATH } from 'shared/config'
+import { ReactNode } from 'react'
 
-export const EventCard = () => {
+interface Props {
+  tags?: ReactNode
+}
+
+export const EventCard = ({ tags }: Props) => {
   return (
     <Link to={generatePath(PATH.EVENT, { eventId: 1 })}>
       <Card
+        className={styles.card}
         cover={
           <img
             alt='example'
@@ -20,6 +26,7 @@ export const EventCard = () => {
           Научно-исследовательская работа
         </Typography.Paragraph>
         <Typography.Text disabled>Можно получить 5 баллов</Typography.Text>
+        {tags && <div className={styles.tags}>{tags}</div>}
       </Card>
     </Link>
   )
