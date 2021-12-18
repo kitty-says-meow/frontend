@@ -28,7 +28,7 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
       ]}
     >
       <Form layout='vertical'>
-        <Form.Item label='Сколько баллов вы хотите подарить?'>
+        <Form.Item label='Сколько баллов ты хочешь подарить?'>
           <InputNumber placeholder='122' />
         </Form.Item>
         <Form.Item label='Пользователь'>

@@ -1,5 +1,6 @@
 import { Button, Card, Typography } from 'antd'
 import { useState } from 'react'
+import { generatePath, Link } from 'react-router-dom'
 
 import { useUser } from 'entities/user/lib'
 import { PageTitle } from 'shared/ui'
@@ -7,6 +8,7 @@ import { PageTitle } from 'shared/ui'
 import { Achievements, ScoreCard, ShareModal } from '..'
 import mock from '../../assets/mock.svg'
 import styles from './profile.module.scss'
+import { PATH } from 'shared/config'
 
 export const Profile = () => {
   const { user } = useUser()
@@ -37,7 +39,15 @@ export const Profile = () => {
             <Button onClick={() => setIsShareModalVisible(true)}>
               Подарить
             </Button>
-            <Button>Потратить</Button>
+            {user && (
+              <Link
+                to={generatePath(PATH.PROFILE_SHOP, {
+                  userId: user.id,
+                })}
+              >
+                <Button>Потратить</Button>
+              </Link>
+            )}
           </ScoreCard>
           <Achievements />
         </div>
