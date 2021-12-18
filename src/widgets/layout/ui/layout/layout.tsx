@@ -38,7 +38,7 @@ export const Layout = ({ children }: Props) => {
 
   const pages = useMemo<{ link: string; title: string; icon: ReactNode }[]>(
     () => [
-      { title: `Моя страница`, link: id, icon: <EnvironmentOutlined /> },
+      { title: `Моя страница`, link: `/${id}`, icon: <EnvironmentOutlined /> },
       { title: `Мероприятия`, link: PATH.EVENTS, icon: <UserOutlined /> },
       { title: `Рейтинг`, link: PATH.RATING, icon: <StarOutlined /> },
       {

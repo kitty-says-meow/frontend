@@ -1,0 +1,49 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  grid-gap: 24px;
+}
+
+.image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.name.name {
+  margin-top: 16px;
+  margin-bottom: 0;
+}
+
+.right {
+}
+
+.description {
+  width: 70%;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  grid-gap: 50px;
+  justify-content: start;
+}
+
+.date {
+}
+
+.dateTitle {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  text-decoration-line: underline;
+  color: #1a4ca9 !important;
+}
+
+.dateDescription {
+}
+
+.hr {
+  border-top-color: #bcc4d3;
+}
