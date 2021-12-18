@@ -1,7 +1,20 @@
-import { Button, Form, InputNumber, Modal, Select, Spin } from 'antd'
-import { Dispatch, useState } from 'react'
+import {
+  Button,
+  Form,
+  InputNumber,
+  Modal,
+  notification,
+  Select,
+  Spin,
+} from 'antd'
+import { Dispatch, useCallback, useState } from 'react'
 import { useDebounce } from 'shared/lib'
-import { useUsersSearch } from 'entities/user/lib'
+import {
+  sendUserScore,
+  useUserContext,
+  useUsersSearch,
+} from 'entities/user/lib'
+import { mutate } from 'swr'
 
 interface Props {
   isVisible: boolean
@@ -12,8 +25,26 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
   const [search, setSearch] = useState<string>()
   const debouncedSearch = useDebounce(search, 300)
   const { data: users, isValidating } = useUsersSearch(debouncedSearch)
+  const { user } = useUserContext()
 
-  console.log(users)
+  const [form] = Form.useForm()
+
+  const handleShare = useCallback(
+    async ({
+      username,
+      score,
+    }: Paths.UsersScoreSendCreate.RequestBody &
+      Paths.UsersScoreSendCreate.PathParameters) => {
+      if (!user) {
+        return
+      }
+      await sendUserScore(username, score)
+      notification.success({ message: `Баллы успешно отправлены` })
+      await mutate(`/users/${user.id}`)
+      setVisible(false)
+    },
+    [setVisible, user],
+  )
 
   return (
     <Modal
@@ -22,16 +53,16 @@ export const ShareModal = ({ isVisible, setVisible }: Props) => {
       onCancel={() => setVisible(false)}
       width={384}
       footer={[
-        <Button key='share' type='primary'>
+        <Button key='share' type='primary' onClick={form.submit}>
           Подарить
         </Button>,
       ]}
     >
-      <Form layout='vertical'>
-        <Form.Item label='Сколько баллов ты хочешь подарить?'>
+      <Form layout='vertical' form={form} onFinish={handleShare}>
+        <Form.Item label='Сколько баллов ты хочешь подарить?' name='score'>
           <InputNumber placeholder='122' />
         </Form.Item>
-        <Form.Item label='Пользователь'>
+        <Form.Item label='Пользователь' name='username'>
           <Select
             showSearch
             options={users?.map((user) => ({

@@ -1,11 +1,11 @@
-import { useUser } from 'entities/user/lib'
+import { useUserContext } from 'entities/user/lib'
 
 import { useEffect } from 'react'
 import { generatePath, useHistory } from 'react-router-dom'
 import { PATH } from 'shared/config'
 
 export const Home = () => {
-  const { user } = useUser()
+  const { user } = useUserContext()
   const history = useHistory()
 
   useEffect(() => {

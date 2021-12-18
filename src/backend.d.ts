@@ -1,15 +1,30 @@
 declare namespace Components {
   namespace Schemas {
+    export interface Department {
+      id: number
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Описание
+       */
+      description: string
+      /**
+       * Ссылка
+       */
+      link: string // uri
+      /**
+       * Логотип
+       */
+      logo: string // uri
+    }
     export interface Profile {
       /**
        * Имя пользователя
        * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
        */
       username: string
-      /**
-       * Адрес электронной почты
-       */
-      email: string // email
       /**
        * Имя
        */
@@ -18,6 +33,25 @@ declare namespace Components {
        * Фамилия
        */
       lastName: string
+      /**
+       * Баллы ПГАС
+       */
+      pgasScore: number
+      /**
+       * Личные баллы
+       */
+      personalScore: number
+      /**
+       * Адрес электронной почты
+       */
+      email: string // email
+      departments: Department[]
+    }
+    export interface ScoreOperation {
+      score: number
+    }
+    export interface ScoreOperationRequest {
+      score: number
     }
     export interface User {
       /**
@@ -33,6 +67,14 @@ declare namespace Components {
        * Фамилия
        */
       lastName: string
+      /**
+       * Баллы ПГАС
+       */
+      pgasScore: number
+      /**
+       * Личные баллы
+       */
+      personalScore: number
     }
   }
 }
@@ -153,15 +195,54 @@ declare namespace Paths {
       export type $200 = Components.Schemas.Profile
     }
   }
-  namespace UsersSearchList {
+  namespace UsersRetrieve {
     namespace Parameters {
-      export type User = string
+      /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      export type Username = string
     }
-    export interface QueryParameters {
-      user: Parameters.User
+    export interface PathParameters {
+      username: /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      Parameters.Username
     }
     namespace Responses {
-      export type $200 = Components.Schemas.User[]
+      export type $200 = Components.Schemas.User
+    }
+  }
+  namespace UsersScoreConvertCreate {
+    export type RequestBody = Components.Schemas.ScoreOperationRequest
+    namespace Responses {
+      export interface $200 {}
+    }
+  }
+  namespace UsersScoreSendCreate {
+    namespace Parameters {
+      /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      export type Username = string
+    }
+    export interface PathParameters {
+      username: /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      Parameters.Username
+    }
+    export type RequestBody = Components.Schemas.ScoreOperationRequest
+    namespace Responses {
+      export type $200 = Components.Schemas.ScoreOperation
+    }
+  }
+  namespace UsersSearchRetrieve {
+    namespace Responses {
+      export type $200 = Components.Schemas.User
     }
   }
 }
