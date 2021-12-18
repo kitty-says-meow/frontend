@@ -1,7 +1,15 @@
 import { api } from 'shared/api'
 import useSWR from 'swr'
 
-export const useEvents = () => useSWR<Components.Schemas.Event[]>(`/events`)
+export const useEvents = (category: string) =>
+  useSWR<Components.Schemas.Event[]>([
+    `/events`,
+    {
+      params: {
+        category,
+      },
+    },
+  ])
 
 export const useEvent = (id: number | string) =>
   useSWR<Components.Schemas.Event>(`/events/${id}`)

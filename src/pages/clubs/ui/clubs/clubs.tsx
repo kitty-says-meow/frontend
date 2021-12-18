@@ -4,9 +4,11 @@ import { EventCard } from 'widgets/events/ui'
 import { Button, Tag } from 'antd'
 import { useState } from 'react'
 import { CreateEvent } from '..'
+import { useEvents } from 'entities/events/lib'
 
 export const Clubs = () => {
   const [isVisible, setIsVisible] = useState(false)
+  const { data: events } = useEvents(``)
 
   return (
     <>
@@ -20,16 +22,16 @@ export const Clubs = () => {
         Создать мероприятие
       </Button>
       <div className={styles.wrapper}>
-        <EventCard
-          tags={
-            <>
-              <Tag>akjsdnsajk</Tag>
-            </>
-          }
-        />
-        <EventCard />
-        <EventCard />
-        <EventCard />
+        {events?.map((event) => (
+          <EventCard
+            event={event}
+            tags={
+              <>
+                <Tag>akjsdnsajk</Tag>
+              </>
+            }
+          />
+        ))}
       </div>
       <CreateEvent visible={isVisible} setVisible={setIsVisible} />
     </>

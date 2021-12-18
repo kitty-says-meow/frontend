@@ -3,12 +3,30 @@ import { generatePath, Link } from 'react-router-dom'
 import styles from './event-card.module.scss'
 import { PATH } from 'shared/config'
 import { ReactNode } from 'react'
+import { declOfNum } from 'shared/lib'
 
 interface Props {
   tags?: ReactNode
+  event: Components.Schemas.Event
 }
 
-export const EventCard = ({ tags }: Props) => {
+const scoresRange = (
+  achievements: Components.Schemas.Event['achievements'],
+) => {
+  let min = Infinity
+  let max = -Infinity
+
+  achievements.forEach((achievement) => {
+    min = Math.min(min, achievement.score)
+    max = Math.max(max, achievement.score)
+  })
+
+  return max > min
+    ? `${min}-${max} баллов`
+    : `${max} ${declOfNum(max, [`балл`, `балла`, `баллов`])}`
+}
+
+export const EventCard = ({ tags, event }: Props) => {
   return (
     <Link to={generatePath(PATH.EVENT, { eventId: 1 })}>
       <Card
@@ -21,11 +39,13 @@ export const EventCard = ({ tags }: Props) => {
           />
         }
       >
-        <Typography.Title level={5}>Хакатон от ICT</Typography.Title>
-        <Typography.Paragraph>
-          Научно-исследовательская работа
+        <Typography.Title level={5}>{event.name}</Typography.Title>
+        <Typography.Paragraph className={styles.description}>
+          {event.description}
         </Typography.Paragraph>
-        <Typography.Text disabled>Можно получить 5 баллов</Typography.Text>
+        <Typography.Text disabled>
+          Можно получить {scoresRange(event.achievements)}
+        </Typography.Text>
         {tags && <div className={styles.tags}>{tags}</div>}
       </Card>
     </Link>
