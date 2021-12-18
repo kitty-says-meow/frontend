@@ -4,12 +4,18 @@ import { Button, Card, notification, Statistic, Typography } from 'antd'
 
 import styles from './profile-shop.module.scss'
 import { itemsContent } from '../../ItemsContent'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
+import { useUserProfile } from 'entities/user/lib'
 
 export const ProfileShop = () => {
   const [items, setItems] = useState<number[]>(itemsContent.map(() => 0))
   const [sum, setSum] = useState(0)
-  const myScores = 10
+  const { data: profile } = useUserProfile()
+
+  const score = useMemo(
+    () => profile?.personalScore || 0,
+    [profile?.personalScore],
+  )
 
   const handleCheck = (index: number, value: number) => {
     const newItems = [...items]
@@ -17,7 +23,7 @@ export const ProfileShop = () => {
 
     const sum = newItems.reduce((acc, val) => acc + val)
 
-    if (sum <= myScores) {
+    if (sum <= score) {
       setSum(sum)
       setItems(newItems)
       return
@@ -35,7 +41,7 @@ export const ProfileShop = () => {
           потратить баллы
         </Typography.Title>
         <Card className={styles.card}>
-          <Statistic title='Твои баллы' value={myScores} />
+          <Statistic title='Твои баллы' value={score} />
         </Card>
         <Card className={styles.card}>
           <Statistic title='Общая стоимость' value={sum} />

@@ -1,5 +1,31 @@
 declare namespace Components {
   namespace Schemas {
+    export interface AchievementCreate {
+      id: number
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Баллы
+       */
+      score: number
+      /**
+       * Пользователь
+       */
+      user: null | number
+    }
+    export interface AchievementCreateRequest {
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Баллы
+       */
+      score: number
+    }
+    export type CategoryEnum = 1 | 2 | 3 | 4 | 5
     export interface Department {
       id: number
       /**
@@ -18,6 +44,55 @@ declare namespace Components {
        * Логотип
        */
       logo: string // uri
+    }
+    export interface Event {
+      id: number
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Описание
+       */
+      description?: string | null
+      /**
+       * Направление
+       */
+      category: 1 | 2 | 3 | 4 | 5
+      /**
+       * Дата и время начала
+       */
+      dateStart?: string | null // date-time
+      /**
+       * Дата и время конца
+       */
+      dateEnd?: string | null // date-time
+      department: Department
+      achievements: AchievementCreate[]
+    }
+    export interface EventRequest {
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Описание
+       */
+      description?: string | null
+      /**
+       * Направление
+       */
+      category: 1 | 2 | 3 | 4 | 5
+      /**
+       * Дата и время начала
+       */
+      dateStart?: string | null // date-time
+      /**
+       * Дата и время конца
+       */
+      dateEnd?: string | null // date-time
+      department: number
+      achievements: AchievementCreateRequest[]
     }
     export interface Profile {
       /**
@@ -79,115 +154,35 @@ declare namespace Components {
   }
 }
 declare namespace Paths {
-  namespace SchemaRetrieve {
+  namespace EventsCreate {
+    export type RequestBody = Components.Schemas.EventRequest
+    namespace Responses {
+      export type $201 = Components.Schemas.Event
+    }
+  }
+  namespace EventsList {
     namespace Parameters {
-      export type Format = 'json' | 'yaml'
-      export type Lang =
-        | 'af'
-        | 'ar'
-        | 'ar-dz'
-        | 'ast'
-        | 'az'
-        | 'be'
-        | 'bg'
-        | 'bn'
-        | 'br'
-        | 'bs'
-        | 'ca'
-        | 'cs'
-        | 'cy'
-        | 'da'
-        | 'de'
-        | 'dsb'
-        | 'el'
-        | 'en'
-        | 'en-au'
-        | 'en-gb'
-        | 'eo'
-        | 'es'
-        | 'es-ar'
-        | 'es-co'
-        | 'es-mx'
-        | 'es-ni'
-        | 'es-ve'
-        | 'et'
-        | 'eu'
-        | 'fa'
-        | 'fi'
-        | 'fr'
-        | 'fy'
-        | 'ga'
-        | 'gd'
-        | 'gl'
-        | 'he'
-        | 'hi'
-        | 'hr'
-        | 'hsb'
-        | 'hu'
-        | 'hy'
-        | 'ia'
-        | 'id'
-        | 'ig'
-        | 'io'
-        | 'is'
-        | 'it'
-        | 'ja'
-        | 'ka'
-        | 'kab'
-        | 'kk'
-        | 'km'
-        | 'kn'
-        | 'ko'
-        | 'ky'
-        | 'lb'
-        | 'lt'
-        | 'lv'
-        | 'mk'
-        | 'ml'
-        | 'mn'
-        | 'mr'
-        | 'my'
-        | 'nb'
-        | 'ne'
-        | 'nl'
-        | 'nn'
-        | 'os'
-        | 'pa'
-        | 'pl'
-        | 'pt'
-        | 'pt-br'
-        | 'ro'
-        | 'ru'
-        | 'sk'
-        | 'sl'
-        | 'sq'
-        | 'sr'
-        | 'sr-latn'
-        | 'sv'
-        | 'sw'
-        | 'ta'
-        | 'te'
-        | 'tg'
-        | 'th'
-        | 'tk'
-        | 'tr'
-        | 'tt'
-        | 'udm'
-        | 'uk'
-        | 'ur'
-        | 'uz'
-        | 'vi'
-        | 'zh-hans'
-        | 'zh-hant'
+      /**
+       * Направление
+       */
+      export type Category = 1 | 2 | 3 | 4 | 5
     }
     export interface QueryParameters {
-      format?: Parameters.Format
-      lang?: Parameters.Lang
+      category?: /* Направление */ Parameters.Category
     }
     namespace Responses {
-      export interface $200 {
-        [name: string]: any
-      }
+      export type $200 = Components.Schemas.Event[]
+    }
+  }
+  namespace EventsRetrieve {
+    namespace Parameters {
+      export type Id = number
+    }
+    export interface PathParameters {
+      id: Parameters.Id
+    }
+    namespace Responses {
+      export type $200 = Components.Schemas.Event
     }
   }
   namespace UsersProfileRetrieve {

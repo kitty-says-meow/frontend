@@ -18,7 +18,7 @@ export const ScoreCard = ({ label, info, value, children }: Props) => {
         <InfoCircleFilled className={styles.info} />
       </Tooltip>
       <Typography.Text className={styles.title}>{label}</Typography.Text>
-      <p className={styles.value}>{value}</p>
+      <p className={styles.value}>{value || 0}</p>
       <div className={styles.footer}>{children}</div>
     </Card>
   )
