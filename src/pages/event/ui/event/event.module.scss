@@ -97,10 +97,17 @@
 @media (max-width: 1023px) {
   .wrapper {
     grid-template-columns: 100%;
+    grid-gap: 16px;
   }
 
   .dates {
     grid-template-columns: 100%;
     grid-gap: 16px;
+  }
+
+  .tag {
+    position: static;
+    width: fit-content;
+    padding: 0 7px;
   }
 }
