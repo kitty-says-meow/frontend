@@ -93,3 +93,14 @@
   right: 0;
   top: 0;
 }
+
+@media (max-width: 1023px) {
+  .wrapper {
+    grid-template-columns: 100%;
+  }
+
+  .dates {
+    grid-template-columns: 100%;
+    grid-gap: 16px;
+  }
+}
