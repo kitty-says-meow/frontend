@@ -3,50 +3,13 @@ import { PageTitle } from 'shared/ui'
 import styles from './rating.module.scss'
 import { useRating, useUserProfile } from 'entities/users/lib'
 import { useMemo } from 'react'
-import { declOfNum } from 'shared/lib'
+import { declOfNum, useIsDesktop } from 'shared/lib'
 import { Link } from 'react-router-dom'
-
-const columns = [
-  {
-    key: `index`,
-    title: `Место`,
-    dataIndex: `name`,
-    render: (_: unknown, rating: Components.Schemas.Rating, index: number) =>
-      index + 1,
-  },
-  {
-    key: `name`,
-    title: `Имя`,
-    dataIndex: `name`,
-    render: (_: unknown, rating: Components.Schemas.Rating) => (
-      <Link to={rating.username}>
-        {rating.firstName} {rating.lastName}
-      </Link>
-    ),
-  },
-  {
-    key: `isu`,
-    title: `ИСУ`,
-    dataIndex: `username`,
-    render: (name: string) => <Link to={name}>{name}</Link>,
-  },
-  {
-    key: `isGetting`,
-    title: `Попадаешь в ПГАС?`,
-    dataIndex: `pgasScore`,
-    render: (score: number, rating: Components.Schemas.Rating, index: number) =>
-      index < 30 && !!score ? `Да` : `Нет`,
-  },
-  {
-    key: `score`,
-    title: `Баллы`,
-    dataIndex: `pgasScore`,
-  },
-]
 
 export const Rating = () => {
   const { data: rating } = useRating()
   const { data: profile } = useUserProfile()
+  const { isDesktop } = useIsDesktop()
 
   const isGettingPGAS = useMemo(() => {
     const index = rating?.findIndex(
@@ -78,6 +41,59 @@ export const Rating = () => {
     ])} и ты будешь получать ПГАС!`
   }, [isGettingPGAS, profile, rating])
 
+  const columns = useMemo(() => {
+    const columns = [
+      {
+        key: `index`,
+        title: `Место`,
+        dataIndex: `name`,
+        render: (
+          _: unknown,
+          rating: Components.Schemas.Rating,
+          index: number,
+        ) => index + 1,
+      },
+      {
+        key: `isu`,
+        title: `ИСУ`,
+        dataIndex: `username`,
+        render: (name: string) => <Link to={name}>{name}</Link>,
+      },
+      {
+        key: `score`,
+        title: `Баллы`,
+        dataIndex: `pgasScore`,
+      },
+    ]
+
+    if (isDesktop) {
+      columns.push({
+        key: `name`,
+        title: `Имя`,
+        dataIndex: `name`,
+        // @ts-ignore
+        render: (_: unknown, rating: Components.Schemas.Rating) => (
+          <Link to={rating.username}>
+            {rating.firstName} {rating.lastName}
+          </Link>
+        ),
+      })
+      columns.push({
+        key: `isGetting`,
+        title: `Попадаешь в ПГАС?`,
+        dataIndex: `pgasScore`,
+        // @ts-ignore
+        render: (
+          score: number,
+          rating: Components.Schemas.Rating,
+          index: number,
+        ) => (index < 30 && !!score ? `Да` : `Нет`),
+      })
+    }
+
+    return columns
+  }, [isDesktop])
+
   return (
     <>
       <PageTitle title='Рейтинг' />
@@ -90,6 +106,9 @@ export const Rating = () => {
       <Table
         className={styles.table}
         columns={columns}
+        rowClassName={(record) =>
+          record.username === profile?.username ? styles.myRow : ``
+        }
         dataSource={rating?.map((rating) => ({
           ...rating,
           key: rating.username,

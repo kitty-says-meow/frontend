@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import styles from './all-trophies.module.scss'
 
 import { ReactComponent as HareSVG } from '../hare.svg'
+import { Fragment } from 'react'
 
 const data = [
   {
@@ -52,14 +53,15 @@ export const AllTrophies = () => {
     <>
       <PageTitle title='Достижения' />
       {data.map((category) => (
-        <>
+        <Fragment key={category.id}>
           <Divider className={styles.hr} />
           <Typography.Title level={4} className={styles.categoryName}>
             {category.id}
           </Typography.Title>
           <div className={styles.categoryItem}>
-            {category.trophies.map((item) => (
+            {category.trophies.map((item, index) => (
               <div
+                key={index}
                 className={classNames(styles.item, {
                   [styles.disabled]: !item.access,
                 })}
@@ -76,7 +78,7 @@ export const AllTrophies = () => {
               </div>
             ))}
           </div>
-        </>
+        </Fragment>
       ))}
     </>
   )

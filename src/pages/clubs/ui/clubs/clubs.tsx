@@ -25,6 +25,7 @@ export const Clubs = () => {
       <div className={styles.wrapper}>
         {events?.map((event) => (
           <EventCard
+            key={event.id}
             event={event}
             tags={
               <Tag
