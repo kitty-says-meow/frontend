@@ -165,7 +165,10 @@ export const Event = () => {
                     avatar={
                       <Avatar
                         className={styles.avatar}
-                        src='https://joeschmoe.io/api/v1/random'
+                        src={
+                          participant.avatar ||
+                          `https://joeschmoe.io/api/v1/random`
+                        }
                       />
                     }
                     title={
