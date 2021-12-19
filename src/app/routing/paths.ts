@@ -10,5 +10,6 @@ export const paths: Paths = [
   { path: PATH.RATING, component: pages.Rating },
   { path: PATH.PROFILE_SHOP, component: pages.ProfileShop },
   { path: PATH.CLUBS, component: pages.Clubs },
+  { path: PATH.PROFILE_SHOP_SUCCESS, component: pages.ProfileShopSuccess },
   { path: PATH.PROFILE, component: pages.Profile },
 ]
