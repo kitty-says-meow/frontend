@@ -9,3 +9,15 @@
   top: 36px;
   right: 48px;
 }
+
+@media (max-width: 1023px) {
+  .wrapper {
+    grid-template-columns: 100%;
+  }
+
+  .button {
+    position: static;
+    margin-bottom: 16px;
+    width: 100%;
+  }
+}
