@@ -4,11 +4,12 @@ import { EventCard } from 'widgets/events/ui'
 import { Button, Tag } from 'antd'
 import { useState } from 'react'
 import { CreateEvent } from '..'
-import { useEvents } from 'entities/events/lib'
+import { useClubEvents } from 'entities/events/lib'
+import { statuses, statusToColor } from 'shared/config'
 
 export const Clubs = () => {
   const [isVisible, setIsVisible] = useState(false)
-  const { data: events } = useEvents(``)
+  const { data: events } = useClubEvents()
 
   return (
     <>
@@ -26,9 +27,15 @@ export const Clubs = () => {
           <EventCard
             event={event}
             tags={
-              <>
-                <Tag>akjsdnsajk</Tag>
-              </>
+              <Tag
+                className={styles.tag}
+                color={event?.status && statusToColor[event?.status]}
+              >
+                {
+                  statuses.find((status) => status.value === event?.status)
+                    ?.label
+                }
+              </Tag>
             }
           />
         ))}

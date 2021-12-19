@@ -1,6 +1,6 @@
 declare namespace Components {
   namespace Schemas {
-    export interface AchievementCreate {
+    export interface Achievement {
       id: number
       /**
        * Название
@@ -10,12 +10,9 @@ declare namespace Components {
        * Баллы
        */
       score: number
-      /**
-       * Пользователь
-       */
-      user: null | number
+      user: string
     }
-    export interface AchievementCreateRequest {
+    export interface AchievementRequest {
       /**
        * Название
        */
@@ -24,6 +21,7 @@ declare namespace Components {
        * Баллы
        */
       score: number
+      user: string
     }
     export type CategoryEnum = 1 | 2 | 3 | 4 | 5
     export interface Department {
@@ -68,7 +66,22 @@ declare namespace Components {
        */
       dateEnd?: string | null // date-time
       department: Department
-      achievements: AchievementCreate[]
+      /**
+       * Отчёт
+       */
+      report?: string | null // uri
+      /**
+       * Статус
+       */
+      status?: 1 | 2 | 3 | 4 | 5 | 6 | 7
+      achievements: Achievement[]
+    }
+    export interface EventReportRequest {
+      /**
+       * Отчёт
+       */
+      report?: string | null // binary
+      users: string[]
     }
     export interface EventRequest {
       /**
@@ -92,7 +105,15 @@ declare namespace Components {
        */
       dateEnd?: string | null // date-time
       department: number
-      achievements: AchievementCreateRequest[]
+      /**
+       * Отчёт
+       */
+      report?: string | null // binary
+      /**
+       * Статус
+       */
+      status?: 1 | 2 | 3 | 4 | 5 | 6 | 7
+      achievements: AchievementRequest[]
     }
     export interface Profile {
       /**
@@ -147,6 +168,7 @@ declare namespace Components {
     export interface ScoreOperationRequest {
       score: number
     }
+    export type StatusEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7
     export interface User {
       /**
        * Имя пользователя
@@ -191,6 +213,23 @@ declare namespace Paths {
     }
     namespace Responses {
       export type $200 = Components.Schemas.Event[]
+    }
+  }
+  namespace EventsMyRetrieve {
+    namespace Responses {
+      export type $200 = Components.Schemas.Event
+    }
+  }
+  namespace EventsReportCreate {
+    namespace Parameters {
+      export type Id = number
+    }
+    export interface PathParameters {
+      id: Parameters.Id
+    }
+    export type RequestBody = Components.Schemas.EventReportRequest
+    namespace Responses {
+      export type $200 = Components.Schemas.Event
     }
   }
   namespace EventsRetrieve {

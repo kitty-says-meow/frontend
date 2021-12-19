@@ -1,23 +1,33 @@
 import { PageTitle } from 'shared/ui'
-import { Avatar, Button, Card, Divider, List, Typography } from 'antd'
+import { Avatar, Button, Card, Divider, List, Tag, Typography } from 'antd'
 
 import styles from './event.module.scss'
 import { useEvent } from 'entities/events/lib'
 import { useParams } from 'react-router-dom'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/ru'
-import { categories, roles } from 'shared/config'
+import { categories, roles, statuses, statusToColor } from 'shared/config'
 import { declOfNum } from 'shared/lib'
+import { useUserProfile } from 'entities/users/lib'
+import { ReportModal } from 'pages/event/ui/report-modal/report-modal'
 
 export const Event = () => {
   const { eventId } = useParams<{ eventId: string }>()
   const { data: event } = useEvent(eventId)
+  const { data: profile } = useUserProfile()
+  const [isVisible, setIsVisible] = useState(false)
 
   return (
     <>
       <PageTitle title={event?.name || ``} />
       <div className={styles.wrapper}>
+        <Tag
+          className={styles.tag}
+          color={event?.status && statusToColor[event?.status]}
+        >
+          {statuses.find((status) => status.value === event?.status)?.label}
+        </Tag>
         <div>
           <Card>
             <img
@@ -40,6 +50,20 @@ export const Event = () => {
           <Button block className={styles.button} size='large' type='primary'>
             Записаться
           </Button>
+          {profile?.departments.find(
+            (department) => department.id === event?.department.id,
+          ) &&
+            event?.status === 4 && (
+              <Button
+                block
+                className={styles.button}
+                size='large'
+                type='primary'
+                onClick={() => setIsVisible(true)}
+              >
+                Отправить отчёт
+              </Button>
+            )}
         </div>
         <div className={styles.right}>
           <Typography.Title level={3}>{event?.name}</Typography.Title>
@@ -117,6 +141,11 @@ export const Event = () => {
           />
         </div>
       </div>
+      <ReportModal
+        event={event}
+        isVisible={isVisible}
+        setVisible={setIsVisible}
+      />
     </>
   )
 }
