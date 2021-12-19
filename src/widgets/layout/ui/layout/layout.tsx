@@ -9,7 +9,7 @@ import {
 import { Drawer, Menu } from 'antd'
 import { motion } from 'framer-motion'
 import { ReactNode, useCallback, useMemo, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { generatePath, useHistory, useLocation } from 'react-router-dom'
 
 import { getUser } from 'shared/api'
 import { routingTransitionDuration, PATH } from 'shared/config'
@@ -23,7 +23,9 @@ interface Props {
   children: ReactNode
 }
 
-const Logo = () => <LogoSVG className={styles.logo} />
+const Logo = ({ onClick }: { onClick: () => void }) => (
+  <LogoSVG className={styles.logo} onClick={onClick} />
+)
 
 export const Layout = ({ children }: Props) => {
   const history = useHistory()
@@ -77,7 +79,16 @@ export const Layout = ({ children }: Props) => {
   const menu = useMemo(
     () => (
       <Menu className={styles.menu} mode='inline' selectedKeys={keys}>
-        {isDesktop && <Logo />}
+        {isDesktop && (
+          <Logo
+            onClick={() =>
+              profile &&
+              history.push(
+                generatePath(PATH.PROFILE, { userId: profile.username }),
+              )
+            }
+          />
+        )}
         {pages.map(({ title, link, icon }) => (
           <Menu.Item
             key={link}
@@ -93,7 +104,7 @@ export const Layout = ({ children }: Props) => {
         ))}
       </Menu>
     ),
-    [history, isDesktop, keys, pages],
+    [history, isDesktop, keys, pages, profile],
   )
 
   const [isOpen, setIsOpen] = useState(false)
@@ -102,7 +113,15 @@ export const Layout = ({ children }: Props) => {
     <>
       {!isDesktop && (
         <header className={styles.header}>
-          <LogoSVG className={styles.image} />
+          <LogoSVG
+            className={styles.image}
+            onClick={() =>
+              profile &&
+              history.push(
+                generatePath(PATH.PROFILE, { userId: profile.username }),
+              )
+            }
+          />
           <MenuOutlined
             className={styles.menuIcon}
             onClick={() => setIsOpen(true)}

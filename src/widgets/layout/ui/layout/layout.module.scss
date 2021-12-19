@@ -16,6 +16,7 @@
 }
 
 .logo {
+  cursor: pointer;
   margin: 24px;
   width: calc(100% - 96px);
   height: auto;
@@ -37,6 +38,7 @@
 .image {
   width: auto;
   height: 100%;
+  cursor: pointer;
 }
 
 .menuIcon {
