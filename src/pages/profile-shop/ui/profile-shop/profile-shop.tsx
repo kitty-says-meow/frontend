@@ -3,12 +3,14 @@ import { Item } from '..'
 import { Button, Card, notification, Statistic, Typography } from 'antd'
 
 import styles from './profile-shop.module.scss'
+
 import { itemsContent } from '../../ItemsContent'
 import { useMemo, useState } from 'react'
 import { sendUserScore, useUserProfile } from 'entities/users/lib'
 import { mutate } from 'swr'
 import { generatePath, useHistory } from 'react-router-dom'
 import { PATH } from 'shared/config'
+import { useIsDesktop } from 'shared/lib'
 
 export const ProfileShop = () => {
   const [items, setItems] = useState<number[]>(itemsContent.map(() => 0))
@@ -16,6 +18,7 @@ export const ProfileShop = () => {
   const { data: profile } = useUserProfile()
   const [isLoading, setIsloading] = useState(false)
   const history = useHistory()
+  const { isDesktop } = useIsDesktop()
 
   const score = useMemo(
     () => profile?.personalScore || 0,
@@ -60,16 +63,30 @@ export const ProfileShop = () => {
     <>
       <header className={styles.header}>
         <PageTitle title='Потратить баллы' />
-        <Typography.Title level={4}>
-          Выбери, куда хочешь <br />
-          потратить баллы
-        </Typography.Title>
-        <Card className={styles.card}>
-          <Statistic title='Твои баллы' value={score} />
-        </Card>
-        <Card className={styles.card}>
-          <Statistic title='Общая стоимость' value={sum} />
-        </Card>
+        {isDesktop && (
+          <>
+            <Typography.Title level={4} className={styles.title}>
+              Выбери, куда хочешь <br />
+              потратить баллы
+            </Typography.Title>
+            <Card className={styles.card}>
+              <Statistic title='Твои баллы' value={score} />
+            </Card>
+            <Card className={styles.card}>
+              <Statistic title='Общая стоимость' value={sum} />
+            </Card>
+          </>
+        )}
+        {!isDesktop && (
+          <div className={styles.mobileCards}>
+            <Card className={styles.card}>
+              <Statistic title='Твои баллы' value={score} />
+            </Card>
+            <Card className={styles.card}>
+              <Statistic title='Общая стоимость' value={sum} />
+            </Card>
+          </div>
+        )}
       </header>
       <div className={styles.wrapper}>
         {itemsContent.map((item, index) => (

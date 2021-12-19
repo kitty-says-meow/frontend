@@ -65,3 +65,34 @@
   text-align: center;
   margin-top: 8px;
 }
+
+@media (max-width: 1023px) {
+  .hr {
+    margin: 20px 0 16px !important;
+  }
+  .item {
+    width: 200px;
+    align-items: center;
+    margin-right: 32px;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 500px) {
+  .categoryItem {
+    flex-direction: column;
+  }
+  .item {
+    width: 100%;
+    align-items: center;
+    margin-right: 0;
+    margin-bottom: 24px;
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .description {
+    width: 80%;
+  }
+}
