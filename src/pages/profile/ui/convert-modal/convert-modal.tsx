@@ -39,7 +39,7 @@ export const ConvertModal = ({ isVisible, setVisible }: Props) => {
     >
       <Form layout='vertical' form={form} onFinish={handleShare}>
         <Form.Item
-          label='Сколько баллов ПГАС ты хочешь конвертировать в свои личные баллы?'
+          label='Сколько баллов ПГАС ты хочешь конвертировать в Мета коины?'
           name='score'
         >
           <InputNumber placeholder='122' />

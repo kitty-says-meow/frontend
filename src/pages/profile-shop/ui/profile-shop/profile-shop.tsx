@@ -59,7 +59,7 @@ export const ProfileShop = () => {
   return (
     <>
       <header className={styles.header}>
-        <PageTitle title='Потратить баллы' />
+        <PageTitle title='Потратить Мета коины' />
         <Typography.Title level={4}>
           Выбери, куда хочешь <br />
           потратить баллы

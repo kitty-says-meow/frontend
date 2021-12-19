@@ -17,6 +17,9 @@ export const Profile = () => {
   const [isShareModalVisible, setIsShareModalVisible] = useState(false)
   const [isConvertModalVisible, setIsConvertModalVisible] = useState(false)
 
+  const pgasDescription = 'Ваши конкурсные баллы в конкурсе ПГАС'
+  const metaDescription =
+    '1 коин = 1 ПГАС балл. Коины можно потратить на аренду оборудования, мерч в ITMO.Store, бонусы от партнеров, или подарить своим друзьям '
   return (
     <>
       <PageTitle title={`${user?.firstName} ${user?.lastName}`} />
@@ -36,14 +39,22 @@ export const Profile = () => {
           <Trophies />
         </div>
         <div className={styles.column}>
-          <ScoreCard info='Info' label='Баллы ПГАС' value={user?.pgasScore}>
+          <ScoreCard
+            info={pgasDescription}
+            label='Баллы ПГАС'
+            value={user?.pgasScore}
+          >
             {userContext?.id === user?.username && (
               <Button onClick={() => setIsConvertModalVisible(true)}>
                 Конвертировать
               </Button>
             )}
           </ScoreCard>
-          <ScoreCard info='Info' label='Доп баллы' value={user?.personalScore}>
+          <ScoreCard
+            info={metaDescription}
+            label='Мета коины'
+            value={user?.personalScore}
+          >
             {userContext?.id === user?.username && (
               <>
                 <Button onClick={() => setIsShareModalVisible(true)}>
