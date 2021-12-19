@@ -21,7 +21,6 @@ declare namespace Components {
        * Баллы
        */
       score: number
-      user: string
     }
     export type CategoryEnum = 1 | 2 | 3 | 4 | 5
     export interface Department {
@@ -209,8 +208,28 @@ declare namespace Components {
        * Баллы
        */
       score: number
-      event: string
-      image: string | null
+      event: {
+        id: number
+        /**
+         * Название
+         */
+        name: string
+        /**
+         * Направление
+         */
+        category: 1 | 2 | 3 | 4 | 5
+      }
+    }
+    export interface UserAchievementEvent {
+      id: number
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Направление
+       */
+      category: 1 | 2 | 3 | 4 | 5
     }
   }
 }

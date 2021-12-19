@@ -4,6 +4,7 @@ import styles from './rating.module.scss'
 import { useRating, useUserProfile } from 'entities/users/lib'
 import { useMemo } from 'react'
 import { declOfNum } from 'shared/lib'
+import { Link } from 'react-router-dom'
 
 const columns = [
   {
@@ -17,13 +18,17 @@ const columns = [
     key: `name`,
     title: `Имя`,
     dataIndex: `name`,
-    render: (_: unknown, rating: Components.Schemas.Rating) =>
-      `${rating.firstName} ${rating.lastName}`,
+    render: (_: unknown, rating: Components.Schemas.Rating) => (
+      <Link to={rating.username}>
+        {rating.firstName} {rating.lastName}
+      </Link>
+    ),
   },
   {
     key: `isu`,
     title: `ИСУ`,
     dataIndex: `username`,
+    render: (name: string) => <Link to={name}>{name}</Link>,
   },
   {
     key: `isGetting`,

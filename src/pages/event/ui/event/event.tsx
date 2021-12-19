@@ -12,14 +12,15 @@ import {
 
 import styles from './event.module.scss'
 import { joinEvent, useEvent } from 'entities/events/lib'
-import { useParams } from 'react-router-dom'
+import { generatePath, useParams } from 'react-router-dom'
 import { Fragment, useState } from 'react'
 import moment from 'moment'
 import 'moment/locale/ru'
-import { categories, roles, statuses, statusToColor } from 'shared/config'
+import { categories, PATH, roles, statuses, statusToColor } from 'shared/config'
 import { declOfNum } from 'shared/lib'
 import { useUserProfile } from 'entities/users/lib'
 import { ReportModal } from '..'
+import { Link } from 'react-router-dom'
 
 export const Event = () => {
   const { eventId } = useParams<{ eventId: string }>()
@@ -91,7 +92,8 @@ export const Event = () => {
           {profile?.departments.find(
             (department) => department.id === event?.department.id,
           ) &&
-            event?.status === 4 && (
+            event &&
+            [2, 4].includes(event?.status) && (
               <Button
                 block
                 className={styles.button}
@@ -156,21 +158,27 @@ export const Event = () => {
             dataSource={event?.participants}
             itemLayout='horizontal'
             renderItem={(participant) => (
-              <List.Item className={styles.item}>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar
-                      className={styles.avatar}
-                      src='https://joeschmoe.io/api/v1/random'
-                    />
-                  }
-                  title={
-                    <Typography.Title
-                      level={5}
-                    >{`${participant.firstName} ${participant.lastName}`}</Typography.Title>
-                  }
-                />
-              </List.Item>
+              <Link
+                to={generatePath(PATH.PROFILE, {
+                  userId: participant.username,
+                })}
+              >
+                <List.Item className={styles.item}>
+                  <List.Item.Meta
+                    avatar={
+                      <Avatar
+                        className={styles.avatar}
+                        src='https://joeschmoe.io/api/v1/random'
+                      />
+                    }
+                    title={
+                      <Typography.Title
+                        level={5}
+                      >{`${participant.firstName} ${participant.lastName}`}</Typography.Title>
+                    }
+                  />
+                </List.Item>
+              </Link>
             )}
           />
         </div>
