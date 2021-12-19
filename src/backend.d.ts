@@ -120,6 +120,10 @@ declare namespace Components {
        * Фамилия
        */
       lastName: string
+      /**
+       * Ссылка на аватар
+       */
+      avatar: string | null // uri
     }
     export interface Profile {
       /**
@@ -135,6 +139,10 @@ declare namespace Components {
        * Фамилия
        */
       lastName: string
+      /**
+       * Ссылка на аватар
+       */
+      avatar: string | null // uri
       /**
        * Баллы ПГАС
        */
@@ -214,6 +222,10 @@ declare namespace Components {
        * Фамилия
        */
       lastName: string
+      /**
+       * Ссылка на аватар
+       */
+      avatar: string | null // uri
       /**
        * Баллы ПГАС
        */

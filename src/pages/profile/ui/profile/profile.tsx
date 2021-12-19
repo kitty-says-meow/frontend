@@ -23,11 +23,7 @@ export const Profile = () => {
       <div className={styles.wrapper}>
         <div>
           <Card>
-            <img
-              alt=''
-              className={styles.image}
-              src={userContext?.avatarUrl || mock}
-            />
+            <img alt='' className={styles.image} src={user?.avatar || mock} />
             <Typography.Title className={styles.name} level={5}>
               {user?.firstName} {user?.lastName}
             </Typography.Title>
