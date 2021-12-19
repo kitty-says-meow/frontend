@@ -3,6 +3,7 @@ import {
   SmileOutlined,
   StarOutlined,
   UserOutlined,
+  TrophyOutlined,
 } from '@ant-design/icons'
 import { Menu } from 'antd'
 import { motion } from 'framer-motion'
@@ -40,6 +41,7 @@ export const Layout = ({ children }: Props) => {
       { title: `Моя страница`, link: `/${id}`, icon: <EnvironmentOutlined /> },
       { title: `Мероприятия`, link: PATH.EVENTS, icon: <UserOutlined /> },
       { title: `Рейтинг`, link: PATH.RATING, icon: <StarOutlined /> },
+      { title: `Достижения`, link: PATH.TROPHIES, icon: <TrophyOutlined /> },
     ]
 
     if (profile?.departments.length) {
