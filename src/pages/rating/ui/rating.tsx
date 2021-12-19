@@ -80,7 +80,7 @@ export const Rating = () => {
       })
       columns.push({
         key: `isGetting`,
-        title: `Попадаешь в ПГАС?`,
+        title: `Попадает в ПГАС?`,
         dataIndex: `pgasScore`,
         // @ts-ignore
         render: (
