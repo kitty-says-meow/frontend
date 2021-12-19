@@ -28,7 +28,7 @@ const scoresRange = (
 
 export const EventCard = ({ tags, event }: Props) => {
   return (
-    <Link to={generatePath(PATH.EVENT, { eventId: 1 })}>
+    <Link to={generatePath(PATH.EVENT, { eventId: event.id })}>
       <Card
         className={styles.card}
         cover={

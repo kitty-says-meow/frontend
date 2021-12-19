@@ -1,4 +1,5 @@
 .wrapper {
+  position: relative;
   display: grid;
   grid-template-columns: 320px 1fr;
   grid-gap: 24px;
@@ -84,4 +85,11 @@
 
 .button {
   margin-top: 16px;
+}
+
+.tag {
+  padding: 4px 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
