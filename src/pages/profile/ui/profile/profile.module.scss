@@ -22,3 +22,13 @@
   grid-gap: 16px;
   align-content: start;
 }
+
+@media (max-width: 1023px) {
+  .wrapper {
+    grid-template-columns: 100%;
+  }
+
+  .column {
+    grid-template-columns: 100%;
+  }
+}
