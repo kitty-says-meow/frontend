@@ -17,6 +17,7 @@ import styles from './create-event.module.scss'
 import { createEvent } from 'entities/events/lib'
 import { generatePath, useHistory } from 'react-router-dom'
 import { useUserProfile } from 'entities/users/lib'
+import { roles } from 'shared/config'
 
 interface Props {
   visible: boolean
@@ -30,12 +31,18 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
 
   const handleFinish = async ({
     range,
+    achievements,
+    organizers,
     ...values
-  }: Paths.EventsCreate.RequestBody & { range: [Moment, Moment] }) => {
+  }: Paths.EventsCreate.RequestBody & {
+    range: [Moment, Moment]
+    organizers: Paths.EventsCreate.RequestBody['achievements']
+  }) => {
     const { data } = await createEvent({
       ...values,
-      dateStart: range[0].toJSON(),
-      dateEnd: range[1].toJSON(),
+      dateStart: range?.[0].toJSON(),
+      dateEnd: range?.[1].toJSON(),
+      achievements: [...achievements, ...organizers],
     })
     notification.success({ message: `Заявка на событие отправлена` })
     history.push(generatePath(PATH.EVENT, { eventId: data.id }))
@@ -74,16 +81,55 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
         <Form.Item name='range' label='Даты мероприятия'>
           <DatePicker.RangePicker className={styles.number} size='large' />
         </Form.Item>
-        <Form.Item
-          name='organizers'
-          label='Количество организаторов (не считая главного)'
-        >
-          <InputNumber
-            size='large'
-            className={styles.number}
-            placeholder='13'
-          />
-        </Form.Item>
+        <Form.List name='organizers'>
+          {(fields, { add, remove }) => (
+            <>
+              <Typography.Paragraph className={styles.label}>
+                Организаторы
+              </Typography.Paragraph>
+              {fields.map(({ key, name, fieldKey, ...restField }) => (
+                <div key={key} className={styles.wrapper}>
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'name']}
+                    fieldKey={[fieldKey, 'name']}
+                  >
+                    <Select
+                      size='large'
+                      placeholder='Организатор'
+                      options={roles}
+                    />
+                  </Form.Item>
+                  <Form.Item
+                    {...restField}
+                    name={[name, 'score']}
+                    fieldKey={[fieldKey, 'score']}
+                  >
+                    <InputNumber
+                      size='large'
+                      className={styles.number}
+                      placeholder='Баллы'
+                    />
+                  </Form.Item>
+                  <MinusCircleOutlined
+                    className={styles.minus}
+                    onClick={() => remove(name)}
+                  />
+                </div>
+              ))}
+              <Form.Item>
+                <Button
+                  type='dashed'
+                  onClick={() => add()}
+                  block
+                  icon={<PlusOutlined />}
+                >
+                  Add field
+                </Button>
+              </Form.Item>
+            </>
+          )}
+        </Form.List>
         <Form.List name='achievements'>
           {(fields, { add, remove }) => (
             <>
@@ -107,7 +153,7 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
                     <InputNumber
                       size='large'
                       className={styles.number}
-                      placeholder='123123'
+                      placeholder='Баллы'
                     />
                   </Form.Item>
                   <MinusCircleOutlined
