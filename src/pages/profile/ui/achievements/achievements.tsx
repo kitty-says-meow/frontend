@@ -32,7 +32,10 @@ const AchievementCategory = ({ title, achievements, sum }: Props) => {
                 avatar={
                   <Avatar
                     className={styles.avatar}
-                    src='https://joeschmoe.io/api/v1/random'
+                    src={
+                      achievement.event.image ||
+                      `https://joeschmoe.io/api/v1/random`
+                    }
                   />
                 }
                 description={achievement.event.name}

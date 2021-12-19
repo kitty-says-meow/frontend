@@ -272,6 +272,7 @@ declare namespace Components {
          * Направление
          */
         category: 1 | 2 | 3 | 4 | 5
+        image?: string
       }
     }
     export interface UserAchievementEvent {
