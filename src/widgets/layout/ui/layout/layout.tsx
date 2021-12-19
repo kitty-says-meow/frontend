@@ -4,10 +4,11 @@ import {
   StarOutlined,
   UserOutlined,
   TrophyOutlined,
+  MenuOutlined,
 } from '@ant-design/icons'
-import { Menu } from 'antd'
+import { Drawer, Menu } from 'antd'
 import { motion } from 'framer-motion'
-import { ReactNode, useCallback, useMemo } from 'react'
+import { ReactNode, useCallback, useMemo, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 
 import { getUser } from 'shared/api'
@@ -16,6 +17,7 @@ import { ReactComponent as LogoSVG } from './logo.svg'
 
 import styles from './layout.module.scss'
 import { useUserProfile } from 'entities/users/lib'
+import { useIsDesktop } from 'shared/lib'
 
 interface Props {
   children: ReactNode
@@ -28,6 +30,7 @@ export const Layout = ({ children }: Props) => {
   const location = useLocation()
   const { id } = getUser()
   const { data: profile } = useUserProfile()
+  const { isDesktop } = useIsDesktop()
 
   const getKey = useCallback(
     (link: string) => link.split(`/`).filter(Boolean)[0],
@@ -71,30 +74,64 @@ export const Layout = ({ children }: Props) => {
     return []
   }, [getKey, location.pathname, pages])
 
-  return (
-    <div className={styles.wrapper}>
+  const menu = useMemo(
+    () => (
       <Menu className={styles.menu} mode='inline' selectedKeys={keys}>
-        <Logo />
+        {isDesktop && <Logo />}
         {pages.map(({ title, link, icon }) => (
           <Menu.Item
             key={link}
             className={styles.menuItem}
             icon={icon}
-            onClick={() => history.push(link)}
+            onClick={() => {
+              setIsOpen(false)
+              history.push(link)
+            }}
           >
             {title}
           </Menu.Item>
         ))}
       </Menu>
-      <motion.div
-        animate={{ opacity: 1 }}
-        className={styles.content}
-        exit={{ opacity: 0 }}
-        initial={{ opacity: 0 }}
-        transition={{ duration: routingTransitionDuration }}
-      >
-        {children}
-      </motion.div>
-    </div>
+    ),
+    [history, isDesktop, keys, pages],
+  )
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  return (
+    <>
+      {!isDesktop && (
+        <header className={styles.header}>
+          <LogoSVG className={styles.image} />
+          <MenuOutlined
+            className={styles.menuIcon}
+            onClick={() => setIsOpen(true)}
+          />
+        </header>
+      )}
+      <div className={styles.wrapper}>
+        {isDesktop ? (
+          menu
+        ) : (
+          <Drawer
+            className={styles.drawer}
+            width='80%'
+            visible={isOpen}
+            onClose={() => setIsOpen(false)}
+          >
+            {menu}
+          </Drawer>
+        )}
+        <motion.div
+          animate={{ opacity: 1 }}
+          className={styles.content}
+          exit={{ opacity: 0 }}
+          initial={{ opacity: 0 }}
+          transition={{ duration: routingTransitionDuration }}
+        >
+          {children}
+        </motion.div>
+      </div>
+    </>
   )
 }

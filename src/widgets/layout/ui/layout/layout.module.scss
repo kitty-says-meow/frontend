@@ -17,4 +17,55 @@
 
 .logo {
   margin: 24px;
+  width: calc(100% - 96px);
+  height: auto;
+}
+
+.header {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 12px rgba(175, 187, 212, 0.22);
+}
+
+.image {
+  width: auto;
+  height: 100%;
+}
+
+.menuIcon {
+  font-size: 24px;
+}
+
+.drawer {
+  :global(.ant-drawer-body) {
+    padding: 0;
+  }
+
+  :global(.ant-drawer-header) {
+    padding-left: 17px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .menu {
+    margin-top: 32px;
+    filter: none;
+  }
+
+  .content {
+    padding: 24px;
+    height: 100vh;
+    overflow: auto;
+  }
+
+  .wrapper {
+    display: block;
+  }
 }
