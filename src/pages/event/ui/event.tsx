@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom'
 import { Fragment } from 'react'
 import moment from 'moment'
 import 'moment/locale/ru'
-import { categories } from 'shared/config'
+import { categories, roles } from 'shared/config'
 import { declOfNum } from 'shared/lib'
 
 export const Event = () => {
@@ -25,15 +25,17 @@ export const Event = () => {
               className={styles.image}
               src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
             />
-            {event?.achievements.map((achievement) => (
-              <Fragment key={achievement.id}>
-                <Typography.Title className={styles.name} level={5}>
-                  {achievement.score}{' '}
-                  {declOfNum(achievement.score, [`балл`, `балла`, `баллов`])}
-                </Typography.Title>
-                <Typography.Text>{achievement.name}</Typography.Text>
-              </Fragment>
-            ))}
+            {event?.achievements
+              .filter(({ name }) => !roles.find(({ value }) => value === name))
+              .map((achievement) => (
+                <Fragment key={achievement.id}>
+                  <Typography.Title className={styles.name} level={5}>
+                    {achievement.score}{' '}
+                    {declOfNum(achievement.score, [`балл`, `балла`, `баллов`])}
+                  </Typography.Title>
+                  <Typography.Text>{achievement.name}</Typography.Text>
+                </Fragment>
+              ))}
           </Card>
           <Button block className={styles.button} size='large' type='primary'>
             Записаться
