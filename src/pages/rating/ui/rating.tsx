@@ -83,6 +83,7 @@ export const Rating = () => {
         showIcon
       />
       <Table
+        className={styles.table}
         columns={columns}
         dataSource={rating?.map((rating) => ({
           ...rating,
