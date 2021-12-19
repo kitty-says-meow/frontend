@@ -25,16 +25,18 @@
 
 .disabled {
   position: relative;
-  svg {
+
+  img {
     filter: grayscale(1) contrast(0.4) brightness(1.35);
     cursor: pointer;
     transition: 0.3s;
   }
 
   .icon:hover {
-    svg {
+    img {
       filter: grayscale(1) contrast(0.4) brightness(0.6);
     }
+
     .scales {
       display: inline-block;
       position: absolute;

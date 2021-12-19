@@ -16,8 +16,8 @@ export const Rating = () => {
       (column) => column.username === profile?.username,
     )
 
-    return index !== undefined && index < 30
-  }, [rating, profile?.username])
+    return index !== undefined && !!profile?.pgasScore && index < 30
+  }, [rating, profile?.pgasScore, profile?.username])
 
   const message = useMemo(() => {
     if (!rating || !profile) {
