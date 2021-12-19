@@ -13,6 +13,10 @@ interface Props {
 const scoresRange = (
   achievements: Components.Schemas.Event['achievements'],
 ) => {
+  if (!achievements.length) {
+    return `Баллы за мероприятие не начисляются`
+  }
+
   let min = Infinity
   let max = -Infinity
 
@@ -21,9 +25,11 @@ const scoresRange = (
     max = Math.max(max, achievement.score)
   })
 
-  return max > min
-    ? `${min}-${max} баллов`
-    : `${max} ${declOfNum(max, [`балл`, `балла`, `баллов`])}`
+  return `Можно получить ${
+    max > min
+      ? `${min}-${max} баллов`
+      : `${max} ${declOfNum(max, [`балл`, `балла`, `баллов`])}`
+  }`
 }
 
 export const EventCard = ({ tags, event }: Props) => {
@@ -44,7 +50,7 @@ export const EventCard = ({ tags, event }: Props) => {
           {event.description}
         </Typography.Paragraph>
         <Typography.Text disabled className={styles.scores}>
-          Можно получить {scoresRange(event.achievements)}
+          {scoresRange(event.achievements)}
         </Typography.Text>
         {tags && <div className={styles.tags}>{tags}</div>}
       </Card>
