@@ -7,6 +7,7 @@ export enum PATH {
   PROFILE_SHOP_SUCCESS = `/:userId/shop/:code`,
   RATING = `/rating`,
   CLUBS = `/clubs`,
+  TROPHIES = `/trophies`,
 }
 
 export const routingTransitionDuration = 0.3

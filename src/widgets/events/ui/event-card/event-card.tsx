@@ -43,7 +43,7 @@ export const EventCard = ({ tags, event }: Props) => {
         <Typography.Paragraph className={styles.description}>
           {event.description}
         </Typography.Paragraph>
-        <Typography.Text disabled>
+        <Typography.Text disabled className={styles.scores}>
           Можно получить {scoresRange(event.achievements)}
         </Typography.Text>
         {tags && <div className={styles.tags}>{tags}</div>}
