@@ -12,6 +12,22 @@ declare namespace Components {
       score: number
       user: string
     }
+    export interface AchievementRating {
+      id: number
+      /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      user: string
+      /**
+       * Баллы
+       */
+      score: number
+      /**
+       * Начислены баллы ПГАС (дата)
+       */
+      pgasConverted: string | null // date-time
+    }
     export interface AchievementRequest {
       /**
        * Название
@@ -272,7 +288,7 @@ declare namespace Components {
          * Направление
          */
         category: 1 | 2 | 3 | 4 | 5
-        image?: string
+        image: string // uri
       }
     }
     export interface UserAchievementEvent {
@@ -285,6 +301,7 @@ declare namespace Components {
        * Направление
        */
       category: 1 | 2 | 3 | 4 | 5
+      image: string // uri
     }
   }
 }
@@ -357,6 +374,11 @@ declare namespace Paths {
   namespace UsersProfileRetrieve {
     namespace Responses {
       export type $200 = Components.Schemas.Profile
+    }
+  }
+  namespace UsersRatingDataList {
+    namespace Responses {
+      export type $200 = Components.Schemas.AchievementRating[]
     }
   }
   namespace UsersRatingRetrieve {

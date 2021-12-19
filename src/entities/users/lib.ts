@@ -27,3 +27,6 @@ export const convertUserScore = (score: number) =>
 
 export const useRating = () =>
   useSWR<Components.Schemas.Rating[]>(`/users/rating`)
+
+export const useRatingData = () =>
+  useSWR<Components.Schemas.AchievementRating[]>(`/users/rating-data`)
