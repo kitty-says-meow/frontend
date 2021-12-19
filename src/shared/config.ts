@@ -4,6 +4,7 @@ export enum PATH {
   EVENT = `/events/:eventId`,
   PROFILE = `/:userId`,
   PROFILE_SHOP = `/:userId/shop`,
+  PROFILE_SHOP_SUCCESS = `/:userId/shop/:code`,
   RATING = `/rating`,
   CLUBS = `/clubs`,
 }

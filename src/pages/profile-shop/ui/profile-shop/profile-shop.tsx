@@ -5,12 +5,17 @@ import { Button, Card, notification, Statistic, Typography } from 'antd'
 import styles from './profile-shop.module.scss'
 import { itemsContent } from '../../ItemsContent'
 import { useMemo, useState } from 'react'
-import { useUserProfile } from 'entities/users/lib'
+import { sendUserScore, useUserProfile } from 'entities/users/lib'
+import { mutate } from 'swr'
+import { generatePath, useHistory } from 'react-router-dom'
+import { PATH } from 'shared/config'
 
 export const ProfileShop = () => {
   const [items, setItems] = useState<number[]>(itemsContent.map(() => 0))
   const [sum, setSum] = useState(0)
   const { data: profile } = useUserProfile()
+  const [isLoading, setIsloading] = useState(false)
+  const history = useHistory()
 
   const score = useMemo(
     () => profile?.personalScore || 0,
@@ -30,6 +35,25 @@ export const ProfileShop = () => {
     }
 
     notification.error({ message: `Недостаточно средств` })
+  }
+
+  const handlePurchase = async () => {
+    if (!profile) {
+      return
+    }
+    setIsloading(true)
+    await sendUserScore(`admin`, sum)
+    notification.success({ message: `Покупка совершена` })
+    await mutate(`/users/${profile.username}`, {
+      ...profile,
+      personalScore: profile.personalScore - sum,
+    })
+    history.push(
+      generatePath(PATH.PROFILE_SHOP_SUCCESS, {
+        userId: profile.username,
+        code: Math.floor(100000 + Math.random() * 900000),
+      }),
+    )
   }
 
   return (
@@ -58,7 +82,14 @@ export const ProfileShop = () => {
           />
         ))}
       </div>
-      <Button className={styles.button} size='large' type='primary'>
+      <Button
+        className={styles.button}
+        disabled={!items.find(Boolean)}
+        loading={isLoading}
+        size='large'
+        type='primary'
+        onClick={handlePurchase}
+      >
         Обменять баллы
       </Button>
     </>
