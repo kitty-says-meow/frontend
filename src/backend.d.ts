@@ -23,6 +23,7 @@ declare namespace Components {
       score: number
     }
     export type CategoryEnum = 1 | 2 | 3 | 4 | 5
+    export type CodeEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
     export interface Department {
       id: number
       /**
@@ -104,6 +105,7 @@ declare namespace Components {
       department: number
       achievements: AchievementRequest[]
     }
+    export type NullEnum = null
     export interface Participant {
       /**
        * Имя пользователя
@@ -142,6 +144,7 @@ declare namespace Components {
        */
       personalScore: number
       achievements: UserAchievement[]
+      trophies: Trophy[]
       /**
        * Адрес электронной почты
        */
@@ -174,6 +177,29 @@ declare namespace Components {
       score: number
     }
     export type StatusEnum = 1 | 2 | 3 | 4 | 5 | 6 | 7
+    export interface Trophy {
+      /**
+       * Код
+       */
+      code: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Описание
+       */
+      description: string
+      /**
+       * Категория
+       */
+      category?: /* Категория */ CategoryEnum | NullEnum
+      /**
+       * Иконка
+       */
+      icon: string // uri
+      hasTrophy: boolean
+    }
     export interface User {
       /**
        * Имя пользователя
@@ -197,6 +223,7 @@ declare namespace Components {
        */
       personalScore: number
       achievements: UserAchievement[]
+      trophies: Trophy[]
     }
     export interface UserAchievement {
       id: number

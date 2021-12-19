@@ -72,6 +72,7 @@ export const Achievements = () => {
     <div className={styles.wrapper}>
       {Object.entries(achievementByType).map(([category, data]) => (
         <AchievementCategory
+          key={category}
           title={
             categories.find(
               (extCategory) => extCategory.value === parseInt(category),
