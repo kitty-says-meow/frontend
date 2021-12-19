@@ -69,18 +69,16 @@ declare namespace Components {
       /**
        * Отчёт
        */
-      report?: string | null // uri
+      report: string | null // uri
       /**
        * Статус
        */
-      status?: 1 | 2 | 3 | 4 | 5 | 6 | 7
+      status: 1 | 2 | 3 | 4 | 5 | 6 | 7
       achievements: Achievement[]
+      participants: Participant[]
     }
     export interface EventReportRequest {
-      /**
-       * Отчёт
-       */
-      report?: string | null // binary
+      report: string // binary
       users: string[]
     }
     export interface EventRequest {
@@ -105,15 +103,22 @@ declare namespace Components {
        */
       dateEnd?: string | null // date-time
       department: number
-      /**
-       * Отчёт
-       */
-      report?: string | null // binary
-      /**
-       * Статус
-       */
-      status?: 1 | 2 | 3 | 4 | 5 | 6 | 7
       achievements: AchievementRequest[]
+    }
+    export interface Participant {
+      /**
+       * Имя пользователя
+       * Обязательное поле. Не более 150 символов. Только буквы, цифры и символы @/./+/-/_.
+       */
+      username: string
+      /**
+       * Имя
+       */
+      firstName: string
+      /**
+       * Фамилия
+       */
+      lastName: string
     }
     export interface Profile {
       /**
@@ -137,6 +142,7 @@ declare namespace Components {
        * Личные баллы
        */
       personalScore: number
+      achievements: UserAchievement[]
       /**
        * Адрес электронной почты
        */
@@ -191,6 +197,20 @@ declare namespace Components {
        * Личные баллы
        */
       personalScore: number
+      achievements: UserAchievement[]
+    }
+    export interface UserAchievement {
+      id: number
+      /**
+       * Название
+       */
+      name: string
+      /**
+       * Баллы
+       */
+      score: number
+      event: string
+      image: string | null
     }
   }
 }
@@ -199,6 +219,17 @@ declare namespace Paths {
     export type RequestBody = Components.Schemas.EventRequest
     namespace Responses {
       export type $201 = Components.Schemas.Event
+    }
+  }
+  namespace EventsJoinCreate {
+    namespace Parameters {
+      export type Id = number
+    }
+    export interface PathParameters {
+      id: Parameters.Id
+    }
+    namespace Responses {
+      export interface $201 {}
     }
   }
   namespace EventsList {

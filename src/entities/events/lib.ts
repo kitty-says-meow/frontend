@@ -22,3 +22,6 @@ export const useClubEvents = () =>
 
 export const sendReport = (id: number | string, values: unknown) =>
   api.post<Components.Schemas.Event>(`/events/${id}/report`, values)
+
+export const joinEvent = (id: number | string) =>
+  api.post<never>(`/events/${id}/join`)

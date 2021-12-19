@@ -1,8 +1,17 @@
 import { PageTitle } from 'shared/ui'
-import { Avatar, Button, Card, Divider, List, Tag, Typography } from 'antd'
+import {
+  Avatar,
+  Button,
+  Card,
+  Divider,
+  List,
+  notification,
+  Tag,
+  Typography,
+} from 'antd'
 
 import styles from './event.module.scss'
-import { useEvent } from 'entities/events/lib'
+import { joinEvent, useEvent } from 'entities/events/lib'
 import { useParams } from 'react-router-dom'
 import { Fragment, useState } from 'react'
 import moment from 'moment'
@@ -10,13 +19,22 @@ import 'moment/locale/ru'
 import { categories, roles, statuses, statusToColor } from 'shared/config'
 import { declOfNum } from 'shared/lib'
 import { useUserProfile } from 'entities/users/lib'
-import { ReportModal } from 'pages/event/ui/report-modal/report-modal'
+import { ReportModal } from '..'
 
 export const Event = () => {
   const { eventId } = useParams<{ eventId: string }>()
-  const { data: event } = useEvent(eventId)
+  const { data: event, mutate } = useEvent(eventId)
   const { data: profile } = useUserProfile()
   const [isVisible, setIsVisible] = useState(false)
+
+  const handleJoin = async () => {
+    if (!event) {
+      return
+    }
+    await joinEvent(event?.id)
+    notification.success({ message: `Вы записались на мероприятие` })
+    await mutate()
+  }
 
   return (
     <>
@@ -47,9 +65,29 @@ export const Event = () => {
                 </Fragment>
               ))}
           </Card>
-          <Button block className={styles.button} size='large' type='primary'>
-            Записаться
-          </Button>
+          {event?.status === 2 &&
+            !profile?.departments.find(
+              (department) => department.id === event.department.id,
+            ) && (
+              <Button
+                block
+                disabled={
+                  !!event.participants.find(
+                    (participant) => participant.username === profile?.username,
+                  )
+                }
+                className={styles.button}
+                size='large'
+                type='primary'
+                onClick={handleJoin}
+              >
+                {!event.participants.find(
+                  (participant) => participant.username === profile?.username,
+                )
+                  ? `Записаться`
+                  : `Вы записаны`}
+              </Button>
+            )}
           {profile?.departments.find(
             (department) => department.id === event?.department.id,
           ) &&
@@ -106,24 +144,18 @@ export const Event = () => {
           </div>
           <Divider className={styles.hr} />
           <Typography.Title className={styles.dateTitle} level={5}>
+            Организатор
+          </Typography.Title>
+          <Typography.Paragraph>{event?.department.name}</Typography.Paragraph>
+          <Divider className={styles.hr} />
+          <Typography.Title className={styles.dateTitle} level={5}>
             Участники
           </Typography.Title>
           <List
             className={styles.list}
-            dataSource={[
-              {
-                title: `Title`,
-                score: 123,
-                image: `https://joeschmoe.io/api/v1/random`,
-              },
-              {
-                title: `Title`,
-                score: 123,
-                image: `https://joeschmoe.io/api/v1/random`,
-              },
-            ]}
+            dataSource={event?.participants}
             itemLayout='horizontal'
-            renderItem={(item) => (
+            renderItem={(participant) => (
               <List.Item className={styles.item}>
                 <List.Item.Meta
                   avatar={
@@ -133,7 +165,9 @@ export const Event = () => {
                     />
                   }
                   title={
-                    <Typography.Title level={5}>{item.title}</Typography.Title>
+                    <Typography.Title
+                      level={5}
+                    >{`${participant.firstName} ${participant.lastName}`}</Typography.Title>
                   }
                 />
               </List.Item>

@@ -16,6 +16,7 @@ import { UploadOutlined } from '@ant-design/icons'
 import { useDebounce } from 'shared/lib'
 import { useUsersSearch } from 'entities/users/lib'
 import { sendReport } from 'entities/events/lib'
+import { mutate } from 'swr'
 
 interface Props {
   event?: Components.Schemas.Event
@@ -56,9 +57,10 @@ export const ReportModal = ({ isVisible, setVisible, event }: Props) => {
 
     const formData = new FormData()
     formData.append(`report`, file)
-    users.forEach(({ user }) => formData.append(`users[]`, user))
+    users.forEach(({ user }) => formData.append(`users`, user))
 
     await sendReport(event.id, formData)
+    await mutate(`/events/${event.id}`)
     notification.success({ message: `Отчёт отправлен` })
     setVisible(false)
   }
