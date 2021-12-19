@@ -18,6 +18,7 @@ import { createEvent } from 'entities/events/lib'
 import { generatePath, useHistory } from 'react-router-dom'
 import { useUserProfile } from 'entities/users/lib'
 import { roles } from 'shared/config'
+import { Attachments } from 'shared/ui'
 
 interface Props {
   visible: boolean
@@ -33,8 +34,10 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
     range,
     achievements,
     organizers,
+    images,
     ...values
   }: Paths.EventsCreate.RequestBody & {
+    images: number[]
     range: [Moment, Moment]
     organizers: Paths.EventsCreate.RequestBody['achievements']
   }) => {
@@ -43,6 +46,7 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
       dateStart: range?.[0].toJSON(),
       dateEnd: range?.[1].toJSON(),
       achievements: [...achievements, ...organizers],
+      image: images[0],
     })
     notification.success({ message: `Заявка на событие отправлена` })
     history.push(generatePath(PATH.EVENT, { eventId: data.id }))
@@ -80,6 +84,9 @@ export const CreateEvent = ({ visible, setVisible }: Props) => {
         </Form.Item>
         <Form.Item name='range' label='Даты мероприятия'>
           <DatePicker.RangePicker className={styles.number} size='large' />
+        </Form.Item>
+        <Form.Item name='images' label='Изображение'>
+          <Attachments />
         </Form.Item>
         <Form.List name='organizers'>
           {(fields, { add, remove }) => (

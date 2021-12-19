@@ -4,6 +4,7 @@ import styles from './event-card.module.scss'
 import { PATH } from 'shared/config'
 import { ReactNode } from 'react'
 import { declOfNum } from 'shared/lib'
+import Mock from 'shared/mock.svg'
 
 interface Props {
   tags?: ReactNode
@@ -41,7 +42,7 @@ export const EventCard = ({ tags, event }: Props) => {
           <img
             alt='example'
             className={styles.image}
-            src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
+            src={event.image || Mock}
           />
         }
       >

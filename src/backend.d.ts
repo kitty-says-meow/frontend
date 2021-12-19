@@ -66,6 +66,7 @@ declare namespace Components {
        */
       dateEnd?: string | null // date-time
       department: Department
+      image?: string | null // uri
       /**
        * Отчёт
        */
@@ -103,7 +104,21 @@ declare namespace Components {
        */
       dateEnd?: string | null // date-time
       department: number
+      image?: null | number
       achievements: AchievementRequest[]
+    }
+    export interface Image {
+      id: number
+      /**
+       * Файл
+       */
+      file: string // uri
+    }
+    export interface ImageRequest {
+      /**
+       * Файл
+       */
+      file: string // binary
     }
     export type NullEnum = null
     export interface Participant {
@@ -332,6 +347,12 @@ declare namespace Paths {
       export type $200 = Components.Schemas.Event
     }
   }
+  namespace ImagesCreate {
+    export type RequestBody = Components.Schemas.ImageRequest
+    namespace Responses {
+      export type $201 = Components.Schemas.Image
+    }
+  }
   namespace UsersProfileRetrieve {
     namespace Responses {
       export type $200 = Components.Schemas.Profile
@@ -389,7 +410,7 @@ declare namespace Paths {
   }
   namespace UsersSearchRetrieve {
     namespace Responses {
-      export type $200 = Components.Schemas.User
+      export type $200 = Components.Schemas.Participant
     }
   }
 }

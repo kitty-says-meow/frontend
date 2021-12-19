@@ -21,6 +21,7 @@ import { declOfNum } from 'shared/lib'
 import { useUserProfile } from 'entities/users/lib'
 import { ReportModal } from '..'
 import { Link } from 'react-router-dom'
+import Mock from 'shared/mock.svg'
 
 export const Event = () => {
   const { eventId } = useParams<{ eventId: string }>()
@@ -49,11 +50,7 @@ export const Event = () => {
         </Tag>
         <div>
           <Card>
-            <img
-              alt=''
-              className={styles.image}
-              src='https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png'
-            />
+            <img alt='' className={styles.image} src={event?.image || Mock} />
             {event?.achievements
               .filter(({ name }) => !roles.find(({ value }) => value === name))
               .map((achievement) => (
