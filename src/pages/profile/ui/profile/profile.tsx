@@ -39,7 +39,7 @@ export const Profile = () => {
               </Button>
             )}
           </ScoreCard>
-          <ScoreCard info='Info' label='Доп баллы' value={user?.personalScore}>
+          <ScoreCard info='Info' label='Метакоины' value={user?.personalScore}>
             {userContext?.id === user?.username && (
               <>
                 <Button onClick={() => setIsShareModalVisible(true)}>
