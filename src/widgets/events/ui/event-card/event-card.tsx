@@ -5,6 +5,7 @@ import { PATH } from 'shared/config'
 import { ReactNode } from 'react'
 import { declOfNum } from 'shared/lib'
 import Mock from 'shared/mock.svg'
+import { mutate } from 'swr'
 
 interface Props {
   tags?: ReactNode
@@ -35,7 +36,10 @@ const scoresRange = (
 
 export const EventCard = ({ tags, event }: Props) => {
   return (
-    <Link to={generatePath(PATH.EVENT, { eventId: event.id })}>
+    <Link
+      to={generatePath(PATH.EVENT, { eventId: event.id })}
+      onClick={() => mutate(`/events/${event.id}`, event)}
+    >
       <Card
         className={styles.card}
         cover={
